@@ -1,0 +1,30 @@
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Large data
+data/raw/
+data/processed/
+*.csv.gz
+*.tsv.gz
+*.h5ad
+*.RDS
+*.rds
+*.mtx
+*.mtx.gz
+
+# Results
+results/
+figures/
+reports/
+logs/
+temp/
+
+# VS Code / OS
+.vscode/
+.DS_Store
+Thumbs.db

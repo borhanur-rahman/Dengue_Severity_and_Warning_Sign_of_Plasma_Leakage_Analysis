@@ -1,0 +1,39 @@
+project:
+  name: Dengue_Biomarker_Research
+  root_dir: "/home/borhan/Dengue_Project"
+
+data:
+  root_dir: "/home/borhan/Dengue_Project/data/raw/Compendium_Datasets"
+  expression_file: "/home/borhan/Dengue_Project/data/raw/Compendium_Datasets/compendium_expression.csv.gz"
+  metadata_file: "/home/borhan/Dengue_Project/data/raw/Compendium_Datasets/compendium_metadata.csv"
+  condition_counts_file: "/home/borhan/Dengue_Project/data/raw/Compendium_Datasets/condition_counts_report.csv"
+  dataset_summary_file: "/home/borhan/Dengue_Project/data/raw/Compendium_Datasets/dataset_summary.csv"
+
+output:
+  results_dir: "/home/borhan/Dengue_Project/results"
+  figures_dir: "/home/borhan/Dengue_Project/figures"
+  reports_dir: "/home/borhan/Dengue_Project/reports"
+  logs_dir: "/home/borhan/Dengue_Project/logs"
+
+analysis:
+  remove_condition: "Dengue_challenge_rDEN2d30"
+  clinical_dengue_conditions:
+    - "DF"
+    - "DHF_DSS"
+  primary_comparison:
+    case: "DHF_DSS"
+    control: "DF"
+  batch_columns:
+    - "GSE"
+    - "GPL"
+
+zscore:
+  threshold: 2.75
+  recurrence_threshold: 0.30
+  sigma_floor: 0.25
+  epsilon: 0.000001
+
+deg:
+  fdr_threshold: 0.05
+  log2fc_threshold: 0.5
+  cohen_d_threshold: 0.5
