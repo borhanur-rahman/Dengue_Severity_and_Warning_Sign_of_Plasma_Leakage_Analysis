@@ -1,0 +1,12 @@
+gene	MCC	Degree	MNC	weighted_degree	is_isolated
+BTN3A2	1	0	0	0.0	True
+CD70	1	0	0	0.0	True
+EGR1	1	1	1	0.837	False
+EIF2AK2	120	5	5	4.586	False
+IFI44L	120	5	5	4.614	False
+IFIH1	120	5	5	4.689	False
+IFIT3	120	5	5	4.807	False
+PARP8	1	0	0	0.0	True
+PARP9	120	5	5	4.461	False
+SMCHD1	1	0	0	0.0	True
+STAT1	121	6	5	5.577999999999999	False

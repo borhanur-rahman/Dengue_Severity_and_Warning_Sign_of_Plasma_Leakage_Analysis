@@ -1,0 +1,2 @@
+severity_go_terms	severity_kegg_terms	leakage_go_terms	leakage_kegg_terms	severity_union_terms	leakage_union_terms	shared_terms	term_union	gene_union	gene_shared
+12	0	0	1	12	1	0	13	14	0

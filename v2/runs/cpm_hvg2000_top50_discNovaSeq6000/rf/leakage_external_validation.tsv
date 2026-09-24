@@ -1,0 +1,2 @@
+axis	heldout_platform	heldout_n	n_genes	accuracy	balanced_accuracy	auc	mcc	majority
+leakage	HiSeq2500	30	50	0.7333333333333333	0.6363636363636364	0.6435406698564594	0.43808582711518057	0.6333333333333333

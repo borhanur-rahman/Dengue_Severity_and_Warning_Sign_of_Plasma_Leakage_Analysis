@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d7" for="edge" attr.name="combined_score" attr.type="double" />
+  <key id="d6" for="node" attr.name="name" attr.type="string" />
+  <key id="d5" for="node" attr.name="is_isolated" attr.type="boolean" />
+  <key id="d4" for="node" attr.name="weighted_degree" attr.type="double" />
+  <key id="d3" for="node" attr.name="MNC" attr.type="long" />
+  <key id="d2" for="node" attr.name="Degree" attr.type="long" />
+  <key id="d1" for="node" attr.name="MCC" attr.type="long" />
+  <key id="d0" for="node" attr.name="input_gene" attr.type="boolean" />
+  <graph edgedefault="undirected">
+    <node id="FANCC">
+      <data key="d0">True</data>
+      <data key="d1">1</data>
+      <data key="d2">1</data>
+      <data key="d3">1</data>
+      <data key="d4">0.999</data>
+      <data key="d5">False</data>
+      <data key="d6">FANCC</data>
+    </node>
+    <node id="FANCE">
+      <data key="d0">True</data>
+      <data key="d1">1</data>
+      <data key="d2">1</data>
+      <data key="d3">1</data>
+      <data key="d4">0.999</data>
+      <data key="d5">False</data>
+      <data key="d6">FANCE</data>
+    </node>
+    <node id="POLI">
+      <data key="d0">True</data>
+      <data key="d1">1</data>
+      <data key="d2">0</data>
+      <data key="d3">0</data>
+      <data key="d4">0.0</data>
+      <data key="d5">True</data>
+      <data key="d6">POLI</data>
+    </node>
+    <edge source="FANCC" target="FANCE">
+      <data key="d7">0.999</data>
+    </edge>
+  </graph>
+</graphml>

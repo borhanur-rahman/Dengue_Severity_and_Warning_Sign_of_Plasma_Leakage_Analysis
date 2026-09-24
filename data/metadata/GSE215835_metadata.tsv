@@ -1,0 +1,12 @@
+sample_id	gsm	dataset	axis	condition	case_control_role	platform	platform_gpl	cell_subtype
+JKT-12_DF		GSE215835	severity	DF	control	single	single	PBMC
+JKT-13_DF		GSE215835	severity	DF	control	single	single	PBMC
+JKT-21_DF		GSE215835	severity	DF	control	single	single	PBMC
+JKT-26_DF		GSE215835	severity	DF	control	single	single	PBMC
+JKT-27_DF		GSE215835	severity	DF	control	single	single	PBMC
+JKT-20_DHF		GSE215835	severity	DHF	case	single	single	PBMC
+JKT-22_DHF		GSE215835	severity	DHF	case	single	single	PBMC
+JKT-30_DHF		GSE215835	severity	DHF	case	single	single	PBMC
+JKT-31_DHF		GSE215835	severity	DHF	case	single	single	PBMC
+JKT-32_DHF		GSE215835	severity	DHF	case	single	single	PBMC
+JKT-33_DHF		GSE215835	severity	DHF	case	single	single	PBMC

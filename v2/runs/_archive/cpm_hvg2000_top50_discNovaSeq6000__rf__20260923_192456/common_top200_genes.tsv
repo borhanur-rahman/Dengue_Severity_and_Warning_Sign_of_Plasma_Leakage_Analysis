@@ -1,0 +1,4 @@
+top_k	common_rank	gene	severity_rank	leakage_rank
+200	1	EGR1	27	30
+200	2	FOS	130	113
+200	3	CMAHP	100	187

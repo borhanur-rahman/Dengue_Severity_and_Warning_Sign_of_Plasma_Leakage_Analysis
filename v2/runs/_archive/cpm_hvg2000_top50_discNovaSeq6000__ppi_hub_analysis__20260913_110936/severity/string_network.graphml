@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d7" for="edge" attr.name="combined_score" attr.type="double" />
+  <key id="d6" for="node" attr.name="name" attr.type="string" />
+  <key id="d5" for="node" attr.name="is_isolated" attr.type="boolean" />
+  <key id="d4" for="node" attr.name="weighted_degree" attr.type="double" />
+  <key id="d3" for="node" attr.name="MNC" attr.type="long" />
+  <key id="d2" for="node" attr.name="Degree" attr.type="long" />
+  <key id="d1" for="node" attr.name="MCC" attr.type="long" />
+  <key id="d0" for="node" attr.name="input_gene" attr.type="boolean" />
+  <graph edgedefault="undirected">
+    <node id="BTN3A2">
+      <data key="d0">True</data>
+      <data key="d1">1</data>
+      <data key="d2">0</data>
+      <data key="d3">0</data>
+      <data key="d4">0.0</data>
+      <data key="d5">True</data>
+      <data key="d6">BTN3A2</data>
+    </node>
+    <node id="CD70">
+      <data key="d0">True</data>
+      <data key="d1">1</data>
+      <data key="d2">0</data>
+      <data key="d3">0</data>
+      <data key="d4">0.0</data>
+      <data key="d5">True</data>
+      <data key="d6">CD70</data>
+    </node>
+    <node id="EGR1">
+      <data key="d0">True</data>
+      <data key="d1">1</data>
+      <data key="d2">1</data>
+      <data key="d3">1</data>
+      <data key="d4">0.837</data>
+      <data key="d5">False</data>
+      <data key="d6">EGR1</data>
+    </node>
+    <node id="EIF2AK2">
+      <data key="d0">True</data>
+      <data key="d1">120</data>
+      <data key="d2">5</data>
+      <data key="d3">5</data>
+      <data key="d4">4.586</data>
+      <data key="d5">False</data>
+      <data key="d6">EIF2AK2</data>
+    </node>
+    <node id="IFI44L">
+      <data key="d0">True</data>
+      <data key="d1">120</data>
+      <data key="d2">5</data>
+      <data key="d3">5</data>
+      <data key="d4">4.614</data>
+      <data key="d5">False</data>
+      <data key="d6">IFI44L</data>
+    </node>
+    <node id="IFIH1">
+      <data key="d0">True</data>
+      <data key="d1">120</data>
+      <data key="d2">5</data>
+      <data key="d3">5</data>
+      <data key="d4">4.689</data>
+      <data key="d5">False</data>
+      <data key="d6">IFIH1</data>
+    </node>
+    <node id="IFIT3">
+      <data key="d0">True</data>
+      <data key="d1">120</data>
+      <data key="d2">5</data>
+      <data key="d3">5</data>
+      <data key="d4">4.807</data>
+      <data key="d5">False</data>
+      <data key="d6">IFIT3</data>
+    </node>
+    <node id="PARP8">
+      <data key="d0">True</data>
+      <data key="d1">1</data>
+      <data key="d2">0</data>
+      <data key="d3">0</data>
+      <data key="d4">0.0</data>
+      <data key="d5">True</data>
+      <data key="d6">PARP8</data>
+    </node>
+    <node id="PARP9">
+      <data key="d0">True</data>
+      <data key="d1">120</data>
+      <data key="d2">5</data>
+      <data key="d3">5</data>
+      <data key="d4">4.461</data>
+      <data key="d5">False</data>
+      <data key="d6">PARP9</data>
+    </node>
+    <node id="SMCHD1">
+      <data key="d0">True</data>
+      <data key="d1">1</data>
+      <data key="d2">0</data>
+      <data key="d3">0</data>
+      <data key="d4">0.0</data>
+      <data key="d5">True</data>
+      <data key="d6">SMCHD1</data>
+    </node>
+    <node id="STAT1">
+      <data key="d0">True</data>
+      <data key="d1">121</data>
+      <data key="d2">6</data>
+      <data key="d3">5</data>
+      <data key="d4">5.577999999999999</data>
+      <data key="d5">False</data>
+      <data key="d6">STAT1</data>
+    </node>
+    <edge source="EGR1" target="STAT1">
+      <data key="d7">0.837</data>
+    </edge>
+    <edge source="EIF2AK2" target="STAT1">
+      <data key="d7">0.98</data>
+    </edge>
+    <edge source="EIF2AK2" target="IFIH1">
+      <data key="d7">0.962</data>
+    </edge>
+    <edge source="EIF2AK2" target="IFIT3">
+      <data key="d7">0.943</data>
+    </edge>
+    <edge source="EIF2AK2" target="IFI44L">
+      <data key="d7">0.927</data>
+    </edge>
+    <edge source="EIF2AK2" target="PARP9">
+      <data key="d7">0.774</data>
+    </edge>
+    <edge source="IFI44L" target="IFIT3">
+      <data key="d7">0.982</data>
+    </edge>
+    <edge source="IFI44L" target="PARP9">
+      <data key="d7">0.931</data>
+    </edge>
+    <edge source="IFI44L" target="IFIH1">
+      <data key="d7">0.904</data>
+    </edge>
+    <edge source="IFI44L" target="STAT1">
+      <data key="d7">0.87</data>
+    </edge>
+    <edge source="IFIH1" target="IFIT3">
+      <data key="d7">0.972</data>
+    </edge>
+    <edge source="IFIH1" target="STAT1">
+      <data key="d7">0.963</data>
+    </edge>
+    <edge source="IFIH1" target="PARP9">
+      <data key="d7">0.888</data>
+    </edge>
+    <edge source="IFIT3" target="STAT1">
+      <data key="d7">0.985</data>
+    </edge>
+    <edge source="IFIT3" target="PARP9">
+      <data key="d7">0.925</data>
+    </edge>
+    <edge source="PARP9" target="STAT1">
+      <data key="d7">0.943</data>
+    </edge>
+  </graph>
+</graphml>

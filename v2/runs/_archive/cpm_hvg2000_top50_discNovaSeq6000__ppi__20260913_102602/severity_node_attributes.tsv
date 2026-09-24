@@ -1,0 +1,12 @@
+gene	in_GO_BP	in_KEGG	n_GO_terms	n_KEGG_terms	GO_terms	KEGG_terms
+BTN3A2	True	False	3	0	lymphocyte mediated immunity (GO:0002449) | T cell mediated immunity (GO:0002456) | adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains (GO:0002460)	
+CD70	True	False	3	0	lymphocyte mediated immunity (GO:0002449) | T cell mediated immunity (GO:0002456) | adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains (GO:0002460)	
+EGR1	True	False	2	0	cellular response to type I interferon (GO:0071357) | type I interferon signaling pathway (GO:0060337)	
+EIF2AK2	True	False	3	0	defense response to symbiont (GO:0140546) | defense response to virus (GO:0051607) | negative regulation of viral process (GO:0048525)	
+IFI44L	True	False	2	0	defense response to symbiont (GO:0140546) | defense response to virus (GO:0051607)	
+IFIH1	True	False	4	0	defense response to symbiont (GO:0140546) | defense response to virus (GO:0051607) | negative regulation of viral process (GO:0048525) | positive regulation of interferon-alpha production (GO:0032727)	
+IFIT3	True	False	4	0	defense response to symbiont (GO:0140546) | defense response to virus (GO:0051607) | cellular response to type I interferon (GO:0071357) | type I interferon signaling pathway (GO:0060337)	
+PARP8	True	False	1	0	protein mono-ADP-ribosylation (GO:0140289)	
+PARP9	True	False	3	0	protein mono-ADP-ribosylation (GO:0140289) | regulation of response to interferon-gamma (GO:0060330) | positive regulation of double-strand break repair via nonhomologous end joining (GO:2001034)	
+SMCHD1	True	False	1	0	positive regulation of double-strand break repair via nonhomologous end joining (GO:2001034)	
+STAT1	True	False	7	0	defense response to symbiont (GO:0140546) | defense response to virus (GO:0051607) | regulation of response to interferon-gamma (GO:0060330) | cellular response to type I interferon (GO:0071357) | type I interferon signaling pathway (GO:0060337) | negative regulation of viral process (GO:0048525) | positive regulation of interferon-alpha production (GO:0032727)	

@@ -1,0 +1,13 @@
+{
+  "external_dataset": "GSE43777_GPL570",
+  "top_n": 50,
+  "primary_contrast": "acute_early+late",
+  "n_perm": 1000,
+  "n_boot": 2000,
+  "classifier": "RandomForestClassifier",
+  "n_estimators": 300,
+  "model_status": "refit_within_external_cross_validation",
+  "_run_id": "cpm_hvg2000_top50_discNovaSeq6000",
+  "_step": "external_validation",
+  "_written_at": "2026-09-23T20:42:54"
+}

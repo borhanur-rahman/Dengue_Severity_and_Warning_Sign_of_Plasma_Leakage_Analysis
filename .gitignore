@@ -1,30 +1,17 @@
-# Python
-.venv/
-venv/
-env/
+# Python cache
 __pycache__/
 *.pyc
-.ipynb_checkpoints/
 
-# Large data
-data/raw/
-data/processed/
-*.csv.gz
-*.tsv.gz
-*.h5ad
-*.RDS
-*.rds
-*.mtx
-*.mtx.gz
+# Virtual environments
+.venv/
+venv/
 
-# Results
-results/
-figures/
-reports/
-logs/
-temp/
-
-# VS Code / OS
-.vscode/
+# System files
 .DS_Store
-Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+
+# Large generated files (optional)
+*.zip

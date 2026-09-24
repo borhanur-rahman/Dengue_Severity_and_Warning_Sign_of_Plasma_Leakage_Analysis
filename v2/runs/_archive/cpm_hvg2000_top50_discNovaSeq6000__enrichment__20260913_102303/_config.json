@@ -1,0 +1,14 @@
+{
+  "go_library": "GO_Biological_Process_2021",
+  "kegg_library": "KEGG_2021_Human",
+  "padj": 0.05,
+  "top_n": 50,
+  "overlap_universe": "intersection",
+  "axes": [
+    "leakage",
+    "severity"
+  ],
+  "_run_id": "cpm_hvg2000_top50_discNovaSeq6000",
+  "_step": "enrichment",
+  "_written_at": "2026-09-10T22:00:11"
+}
