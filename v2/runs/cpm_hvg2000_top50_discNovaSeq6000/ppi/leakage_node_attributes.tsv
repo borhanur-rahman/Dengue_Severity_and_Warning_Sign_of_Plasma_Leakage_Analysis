@@ -1,4 +1,0 @@
-gene	in_GO_BP	in_KEGG	n_GO_terms	n_KEGG_terms	GO_terms	KEGG_terms
-FANCC	False	True	0	1		Fanconi anemia pathway
-FANCE	False	True	0	1		Fanconi anemia pathway
-POLI	False	True	0	1		Fanconi anemia pathway

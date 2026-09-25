@@ -5,6 +5,11 @@ Put in scripts/ next to the numbered steps.
 Loads config/v2_config.yaml as CFG and seeds RNGs. Also manages the per-run
 output directories so re-running a configuration archives (never overwrites)
 the previous output.
+
+PATH SAFETY: every script imports this module first, so anchoring the working
+directory to the project root here makes all relative paths in the pipeline
+(config, data/, v2/) resolve correctly no matter where the runner
+(Code Ocean run.sh, cron, an IDE) invokes python from.
 """
 from __future__ import annotations
 import datetime as _dt
@@ -18,7 +23,11 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-CONFIG_PATH = Path("config/paths.yaml")
+# --- anchor all relative paths to the project root (scripts/ is one level down)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+os.chdir(PROJECT_ROOT)
+
+CONFIG_PATH = PROJECT_ROOT / "config" / "paths.yaml"
 if not CONFIG_PATH.exists():
     sys.exit(f"Missing {CONFIG_PATH}. Copy v2_config.yaml into config/.")
 CFG: dict = yaml.safe_load(CONFIG_PATH.read_text())
@@ -50,12 +59,7 @@ def ensure_data_dirs() -> None:
 
 
 def make_run_id() -> str:
-    """Directory name encoding the settings that change the result."""
-    rf = CFG["rf"]
-    parts = [f"cpm", f"hvg{rf['hvg_n']}", f"top{rf['top_n']}"]
-    disc = CFG["axes"]["leakage"].get("discovery_platform")
-    parts.append(f"disc{disc}" if disc else "ALLPLATFORMS")
-    return "_".join(parts)
+    return "results"
 
 
 def run_dir(run_id: str, step: str, config: dict | None = None) -> Path:

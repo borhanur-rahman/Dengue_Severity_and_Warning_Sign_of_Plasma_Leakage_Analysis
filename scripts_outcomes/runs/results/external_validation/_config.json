@@ -1,0 +1,14 @@
+{
+  "external_dataset": "GSE43777_GPL570",
+  "top_n": 50,
+  "primary_contrast": "acute_early+late",
+  "n_perm": 500,
+  "n_boot": 1000,
+  "n_estimators_external": 300,
+  "classifier": "RandomForestClassifier",
+  "n_estimators_discovery_config": 300,
+  "model_status": "refit_within_external_cross_validation",
+  "_run_id": "results",
+  "_step": "external_validation",
+  "_written_at": "2026-09-25T10:37:30"
+}

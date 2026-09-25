@@ -4,6 +4,7 @@ project:
 raw_data:
   gse178240_counts: data/raw/GSE178240/GSE178240_all_counts.tsv
   gse215835_counts: data/raw/GSE215835/GSE215835_Dengue_RNAseq_counts.txt
+  gse43777_matrix: data/raw/GSE43777/GSE43777-GPL570_series_matrix.txt.gz
   gse178240_series_base_url: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE178nnn/GSE178240/matrix/
   gse178240_series:
     GPL16791: GSE178240-GPL16791_series_matrix.txt.gz
@@ -12,12 +13,12 @@ platform_names:
   GPL16791: HiSeq2500
   GPL24676: NovaSeq6000
 output:
-  root: v2
-  metadata_dir: v2/metadata
-  processed_dir: v2/processed
-  qc_dir: v2/qc
-  series_dir: v2/raw_series
-  runs_dir: v2/runs
+  root: scripts_outcomes
+  metadata_dir: scripts_outcomes/metadata
+  processed_dir: scripts_outcomes/processed
+  qc_dir: scripts_outcomes/qc
+  series_dir: scripts_outcomes/raw_series
+  runs_dir: scripts_outcomes/runs
   archive_previous_runs: true
 axes:
   severity:
@@ -107,14 +108,6 @@ ppi:
   string_min_score: 0.7
   cytohubba_method: MCC
 target_genes:
-- PARP8
-- PARP9
-- IFIT1
-- IFI44L
-- STAT1
-- SMCHD1
-- EGR1
-- IFIH1
-- EIF2AK2
+
 reproducibility:
   seed: 0

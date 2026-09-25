@@ -1,17 +1,7 @@
-# Python cache
-__pycache__/
-*.pyc
-
-# Virtual environments
-.venv/
-venv/
-
-# System files
-.DS_Store
-
-# Temporary files
-*.log
-*.tmp
-
-# Large generated files (optional)
-*.zip
+__pycache__/, .venv/, *.pyc
+logs/
+output.log
+scripts_outcomes/runs/_archive/
+scripts_outcomes/processed/*.tsv.gz
+scripts_outcomes/raw_series/
+data/interim/, data/metadata/, data/processed/

@@ -245,9 +245,6 @@ def axis_signature(axis, expr, disc_s, disc_y, val_s, val_y):
         er = external_validation(axis, expr, disc_s, disc_y, val_s, val_y, ranked)
         if er: pd.DataFrame([er]).to_csv(OUT / f"{axis}_external_validation.tsv", sep="\t", index=False)
 
-    hits = [(g, ranked.index(g)+1) for g in TARGET_GENES if g in ranked]
-    if hits:
-        print(f"[{axis}] target-gene ranks: " + ", ".join(f"{g}={r}" for g,r in sorted(hits,key=lambda x:x[1])))
     return set(top50), perf, ranked, sweep
 
 

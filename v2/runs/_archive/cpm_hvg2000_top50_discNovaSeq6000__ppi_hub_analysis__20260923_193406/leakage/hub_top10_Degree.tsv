@@ -1,4 +1,0 @@
-rank	gene	MCC	Degree	MNC	weighted_degree	is_isolated
-1	FANCC	1	1	1	0.999	False
-2	FANCE	1	1	1	0.999	False
-3	POLI	1	0	0	0.0	True

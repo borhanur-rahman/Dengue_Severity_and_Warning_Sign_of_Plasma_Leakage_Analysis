@@ -1,3 +1,0 @@
-axis	input_genes	network_nodes	network_edges	isolated_nodes	string_min_score	primary_method	top_hubs	cytoscape_status
-leakage	3	3	1	1	0.7	MCC	FANCC;FANCE;POLI	skipped: Cytoscape/py4cytoscape unavailable (Cannot find local or remote Cytoscape. Start Cytoscape and then proceed.)
-severity	11	11	16	4	0.7	MCC	STAT1;IFIT3;IFIH1;IFI44L;EIF2AK2;PARP9;EGR1;BTN3A2;CD70;PARP8	skipped: Cytoscape/py4cytoscape unavailable (Cannot find local or remote Cytoscape. Start Cytoscape and then proceed.)

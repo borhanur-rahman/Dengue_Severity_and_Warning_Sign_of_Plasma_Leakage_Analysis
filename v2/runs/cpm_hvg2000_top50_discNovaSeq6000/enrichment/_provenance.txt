@@ -1,6 +1,0 @@
-gseapy: 1.2.1
-GO: GO_Biological_Process_2021
-KEGG: KEGG_2021_Human
-padj: 0.05
-top_n: 50
-Cite these exact library names.

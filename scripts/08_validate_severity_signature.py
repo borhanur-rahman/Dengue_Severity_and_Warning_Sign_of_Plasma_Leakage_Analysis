@@ -21,7 +21,10 @@ Four design fixes retained:
   2. PHASE FILTER — primary = acute only; all-phase supplementary
   3. DIRECTION REPLICATION — primary platform-robust endpoint
   4. severity() token fix — DHF first, word boundaries
-============================================================
+
+PATH FIX: MATRIX and PROBE_CACHE now resolve through config/paths.yaml and
+paths.PROC_DIR (project-root anchored) — no hardcoded relative paths, so the
+script runs from any working directory (Code Ocean run.sh, cron, IDE).
 """
 
 from pathlib import Path
@@ -39,20 +42,21 @@ from sklearn.metrics import roc_auc_score
 import mygene
 
 from paths import (CFG, seed_everything, resolve, read_dir, run_dir,
-                   logcpm_path, dataset_tag)
+                   logcpm_path, dataset_tag, PROC_DIR)
 
 seed_everything()
 
 RUN_ID = None                      # None = current run from _latest.txt
-MATRIX = Path("data/raw/GSE43777/GSE43777-GPL570_series_matrix.txt.gz")
+MATRIX = Path(CFG["raw_data"]["gse43777_matrix"])     # <-- was hardcoded
+PROBE_CACHE = PROC_DIR / "GSE43777_GPL570_probe_to_symbol.tsv.gz"  # <-- was hardcoded
 RANDOM_STATE = int(CFG["rf"]["random_state"])
 
 # --- speed / quality knobs ---
-N_EST_EXTERNAL = 300             
-N_PERM = 500                    
-N_BOOT = 1000                     
-N_SPLITS_AUC = 5                  
-N_SPLITS_PERM = 3                  
+N_EST_EXTERNAL = 300
+N_PERM = 500
+N_BOOT = 1000
+N_SPLITS_AUC = 5
+N_SPLITS_PERM = 3
 
 N_ESTIMATORS = int(
     CFG["rf"].get("n_estimators_by_axis", {}).get(
@@ -60,7 +64,6 @@ N_ESTIMATORS = int(
     )
 )
 TOPN = int(CFG["rf"]["top_n"])
-PROBE_CACHE = Path("data/processed/GSE43777_GPL570_probe_to_symbol.tsv.gz")
 
 PHASE_SETS = {
     "acute_early+late": ["EarlyAcute", "LateAcute"],
@@ -356,7 +359,8 @@ def main():
     disc_fc = discovery_direction(panel)
 
     if not MATRIX.exists():
-        raise SystemExit(f"Missing {MATRIX}")
+        raise SystemExit(f"Missing {MATRIX} — add the GSE43777 series matrix "
+                         f"under {CFG['raw_data']['gse43777_matrix']}")
     meta, expr = parse_series_matrix(MATRIX)
     print(f"  external expression: {expr.shape}")
 

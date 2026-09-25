@@ -1,1 +1,0 @@
-cpm_hvg2000_top50_discNovaSeq6000
