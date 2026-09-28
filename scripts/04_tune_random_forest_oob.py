@@ -175,11 +175,13 @@ def tune(axis):
     df["parsimonious"] = df["n_estimators"] == parsimonious
     df["oob_resolution"] = round(resolution, 5)
     return df, rec, parsimonious, spread < resolution
-
 def make_figure(all_df, rec, pars, flat):
     """
     Publication-quality OOB error plot.
     Generates high-resolution PNG (600 dpi) and vector PDF.
+    Grid values are plotted at equally spaced positions (linear/categorical
+    x-axis) so the visual distance between any two adjacent n_estimators
+    values is identical.
     """
 
     try:
@@ -189,7 +191,6 @@ def make_figure(all_df, rec, pars, flat):
     except Exception as exc:
         print(f"[skip figure] matplotlib unavailable: {exc}")
         return
-
 
     df = pd.concat(all_df, ignore_index=True)
 
@@ -201,7 +202,6 @@ def make_figure(all_df, rec, pars, flat):
 
     if len(axes_present) > 1:
         colors[axes_present[1]] = "#d62728"
-
 
     # ============================
     # Figure configuration
@@ -217,18 +217,27 @@ def make_figure(all_df, rec, pars, flat):
         "figure.dpi": 600
     })
 
-
     fig, axs = plt.subplots(
         1,
-        len(axes_present)+1,
-        figsize=(18,6),
+        len(axes_present) + 1,
+        figsize=(18, 6),
         constrained_layout=True
     )
 
+    if len(axes_present) + 1 == 1:
+        axs = [axs]
 
-    if len(axes_present)+1 == 1:
-        axs=[axs]
+    # Shared, sorted grid -> evenly spaced categorical x positions
+    grid_vals = sorted(df["n_estimators"].unique())
+    pos = {v: i for i, v in enumerate(grid_vals)}
+    x_pos = np.arange(len(grid_vals))
 
+    def set_equal_grid_axis(ax, df_axis):
+        """Equal-spaced ticks/labels for one axis' grid values."""
+        vals = sorted(df_axis["n_estimators"].unique())
+        ticks = [pos[v] for v in vals]
+        ax.set_xticks(ticks)
+        ax.set_xticklabels([str(int(v)) for v in vals], rotation=45)
 
     # =====================================
     # Individual axis plots
@@ -237,32 +246,26 @@ def make_figure(all_df, rec, pars, flat):
     for i, axis in enumerate(axes_present):
 
         d = df[df["axis"] == axis].sort_values("n_estimators")
+        x = d["n_estimators"].map(pos).to_numpy()
 
         ax = axs[i]
-
         col = colors[axis]
 
-
         minimum = d["oob_error_mean"].min()
+        resolution = float(d["oob_resolution"].iloc[0])
 
-        resolution = float(
-            d["oob_resolution"].iloc[0]
-        )
-
-
-        # Resolution region
+        # Resolution region (neutral gray: property of the metric, not data)
         ax.axhspan(
             minimum,
             minimum + resolution,
-            alpha=0.15,
-            color=col,
+            alpha=0.30,
+            color="#618d68",
             label=f"Resolution band (1/n={resolution:.3f})"
         )
 
-
-        # Main curve
+        # Main curve (equal spacing on x)
         ax.errorbar(
-            d["n_estimators"],
+            x,
             d["oob_error_mean"],
             yerr=d["oob_error_sd"],
             marker="o",
@@ -273,32 +276,24 @@ def make_figure(all_df, rec, pars, flat):
             label="Mean OOB ± SD"
         )
 
-
-        # Seed variation
+        # Seed variation (axis color: data-driven, hugs the curve)
         ax.fill_between(
-            d["n_estimators"],
+            x,
             d["oob_error_min"],
             d["oob_error_max"],
-            alpha=0.12,
+            alpha=0.20,
             color=col,
             label="Seed range"
         )
 
-
         # Selected point
-
         best_n = int(rec[axis])
-
         best_val = float(
-            d.loc[
-                d["n_estimators"]==best_n,
-                "oob_error_mean"
-            ].iloc[0]
+            d.loc[d["n_estimators"] == best_n, "oob_error_mean"].iloc[0]
         )
 
-
         ax.scatter(
-            best_n,
+            pos[best_n],
             best_val,
             s=180,
             marker="*",
@@ -307,48 +302,27 @@ def make_figure(all_df, rec, pars, flat):
             label=f"Selected {best_n} trees"
         )
 
-
-        # Axis formatting
-
-        ax.set_xscale("log")
-
-        ax.set_xticks(
-            d["n_estimators"]
-        )
-
-        ax.set_xticklabels(
-            [str(int(x)) for x in d["n_estimators"]],
-            rotation=45
-        )
-
+        # Axis formatting (equal spacing, no log scale)
+        set_equal_grid_axis(ax, d)
 
         ax.set_xlabel(
             "Number of trees"
         )
-
         ax.set_ylabel(
             "OOB error"
         )
-
-
         ax.set_title(
             f"{axis.upper()} axis",
             fontweight="bold"
         )
-
-
         ax.grid(
             linestyle="--",
             alpha=0.35
         )
-
-
         ax.legend(
             loc="best",
             frameon=True
         )
-
-
 
     # =====================================
     # Combined comparison plot
@@ -356,15 +330,13 @@ def make_figure(all_df, rec, pars, flat):
 
     ax = axs[-1]
 
-
     for axis in axes_present:
 
-        d = df[df["axis"]==axis].sort_values(
-            "n_estimators"
-        )
+        d = df[df["axis"] == axis].sort_values("n_estimators")
+        x = d["n_estimators"].map(pos).to_numpy()
 
         ax.plot(
-            d["n_estimators"],
+            x,
             d["oob_error_mean"],
             marker="o",
             markersize=8,
@@ -373,80 +345,49 @@ def make_figure(all_df, rec, pars, flat):
             color=colors[axis]
         )
 
-
         ax.fill_between(
-            d["n_estimators"],
-            d["oob_error_mean"]-d["oob_error_sd"],
-            d["oob_error_mean"]+d["oob_error_sd"],
+            x,
+            d["oob_error_mean"] - d["oob_error_sd"],
+            d["oob_error_mean"] + d["oob_error_sd"],
             alpha=0.15,
             color=colors[axis]
         )
 
-
-    ax.set_xscale("log")
-
-
-    ticks = sorted(
-        df["n_estimators"].unique()
-    )
-
-    ax.set_xticks(ticks)
-
-    ax.set_xticklabels(
-        [str(int(x)) for x in ticks],
-        rotation=45
-    )
-
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels([str(int(v)) for v in grid_vals], rotation=45)
 
     ax.set_xlabel(
         "Number of trees"
     )
-
     ax.set_ylabel(
         "OOB error"
     )
-
-
     ax.set_title(
         "Comparison of all axes",
         fontweight="bold"
     )
-
-
     ax.grid(
         linestyle="--",
         alpha=0.35
     )
-
-
     ax.legend()
 
-
-
     # Overall title
-
     fig.suptitle(
         "Random Forest OOB Error vs Number of Estimators",
         fontsize=18,
         fontweight="bold"
     )
 
-
-
-    # Save high quality
-
-    for ext in ["png","pdf"]:
-
+    # Save high quality (600 dpi)
+    for ext in ["png", "pdf"]:
         fig.savefig(
-            QC_DIR /
-            f"oob_error_vs_n_estimators_highres.{ext}",
+            QC_DIR / f"oob_error_vs_n_estimators_highres.{ext}",
             dpi=600,
             bbox_inches="tight"
         )
 
-
     plt.close(fig)
-
 
     print(
         f"[figure saved] {QC_DIR}/oob_error_vs_n_estimators_highres.png"

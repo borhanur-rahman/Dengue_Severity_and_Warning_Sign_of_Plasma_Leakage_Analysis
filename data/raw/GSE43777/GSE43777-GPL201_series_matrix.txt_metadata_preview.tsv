@@ -1,0 +1,169 @@
+gsm	title	char_1	char_2	char_3	char_4	char_5	char_6	char_7
+GSM1070871	VFP-0003_G2_DF [HG-Focus]	patient no.: 3	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-24
+GSM1070872	VFP-0003_G3_DF [HG-Focus]	patient no.: 3	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2008-01-24
+GSM1070873	VFP-0008_G5_DF [HG-Focus]	patient no.: 8	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 5	scan date: 2008-01-24
+GSM1070874	VFP-0008_G6_DF [HG-Focus]	patient no.: 8	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2008-01-24
+GSM1070875	VFP-0008_G7_DF [HG-Focus]	patient no.: 8	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-24
+GSM1070876	VFP-0011_G4_DHF [HG-Focus]	patient no.: 11	Stage: G4	infecting serotype: 3	phase: Late Acute	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-07
+GSM1070877	VFP-0011_G6_DHF [HG-Focus]	patient no.: 11	Stage: G6	infecting serotype: 3	phase: Late Acute	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-07
+GSM1070878	VFP-0011_G7_DHF [HG-Focus]	patient no.: 11	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: c	scan date: 2007-11-07
+GSM1070879	VFP-0012_G0_DF [HG-Focus]	patient no.: 12	Stage: G0	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 0	scan date: 2007-11-15
+GSM1070880	VFP-0012_G1_DF [HG-Focus]	patient no.: 12	Stage: G1	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 1	scan date: 2007-11-15
+GSM1070881	VFP-0012_G2_DF [HG-Focus]	patient no.: 12	Stage: G2	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-15
+GSM1070882	VFP-0012_G3_DF [HG-Focus]	patient no.: 12	Stage: G3	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df2	scan date: 2007-11-15
+GSM1070883	VFP-0012_G5_DF [HG-Focus]	patient no.: 12	Stage: G5	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df3	scan date: 2007-11-15
+GSM1070884	VFP-0012_G7_DF [HG-Focus]	patient no.: 12	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-15
+GSM1070885	VFP-0013_G2_DF [HG-Focus]	patient no.: 13	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-11-21
+GSM1070886	VFP-0013_G3_DF [HG-Focus]	patient no.: 13	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2007-11-21
+GSM1070887	VFP-0013_G4_DF [HG-Focus]	patient no.: 13	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-21
+GSM1070888	VFP-0013_G5_DF [HG-Focus]	patient no.: 13	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 5	scan date: 2007-11-21
+GSM1070889	VFP-0013_G6_DF [HG-Focus]	patient no.: 13	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-21
+GSM1070890	VFP-0013_G7_DF [HG-Focus]	patient no.: 13	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-21
+GSM1070891	VFP-0014_G4_DF [HG-Focus]	patient no.: 14	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-07
+GSM1070892	VFP-0014_G5_DF [HG-Focus]	patient no.: 14	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-07
+GSM1070893	VFP-0014_G7_DF [HG-Focus]	patient no.: 14	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-07
+GSM1070894	VFP-0015_G4_DF [HG-Focus]	patient no.: 15	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-07
+GSM1070895	VFP-0015_G6_DF [HG-Focus]	patient no.: 15	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-07
+GSM1070896	VFP-0015_G7_DF [HG-Focus]	patient no.: 15	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-07
+GSM1070897	VFP-0017_G1_DF [HG-Focus]	patient no.: 17	Stage: G1	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 1	scan date: 2007-11-07
+GSM1070898	VFP-0017_G3_DF [HG-Focus]	patient no.: 17	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-07
+GSM1070899	VFP-0017_G7_DF [HG-Focus]	patient no.: 17	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-07
+GSM1070900	VFP-0020_G4_DF [HG-Focus]	patient no.: 20	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-09
+GSM1070901	VFP-0020_G5_DF [HG-Focus]	patient no.: 20	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-21
+GSM1070902	VFP-0020_G6_DF [HG-Focus]	patient no.: 20	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-09
+GSM1070903	VFP-0021_G2_DF [HG-Focus]	patient no.: 21	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-25
+GSM1070904	VFP-0021_G6_DF [HG-Focus]	patient no.: 21	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-25
+GSM1070905	VFP-0021_G7_DF [HG-Focus]	patient no.: 21	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-25
+GSM1070906	VFP-0022_G4_DF [HG-Focus]	patient no.: 22	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-09
+GSM1070907	VFP-0022_G6_DF [HG-Focus]	patient no.: 22	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-09
+GSM1070908	VFP-0022_G7_DF [HG-Focus]	patient no.: 22	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-09
+GSM1070909	VFP-0023_G3_DF [HG-Focus]	patient no.: 23	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2008-01-18
+GSM1070910	VFP-0023_G6_DF [HG-Focus]	patient no.: 23	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-18
+GSM1070911	VFP-0023_G7_DF [HG-Focus]	patient no.: 23	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-18
+GSM1070912	VFP-0025_G4_DF [HG-Focus]	patient no.: 25	Stage: G4	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-09
+GSM1070913	VFP-0025_G6_DF [HG-Focus]	patient no.: 25	Stage: G6	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-09
+GSM1070914	VFP-0025_G7_DF [HG-Focus]	patient no.: 25	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-09
+GSM1070915	VFP-0026_G2_DF [HG-Focus]	patient no.: 26	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-18
+GSM1070916	VFP-0026_G6_DF [HG-Focus]	patient no.: 26	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-18
+GSM1070917	VFP-0026_G7_DF [HG-Focus]	patient no.: 26	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-18
+GSM1070918	VFP-0027_G2_DF [HG-Focus]	patient no.: 27	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-18
+GSM1070919	VFP-0027_G6_DF [HG-Focus]	patient no.: 27	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-18
+GSM1070920	VFP-0027_G7_DF [HG-Focus]	patient no.: 27	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-18
+GSM1070921	VFP-0029_G6_DF [HG-Focus]	patient no.: 29	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df2	scan date: 2008-01-18
+GSM1070922	VFP-0029_G7_DF [HG-Focus]	patient no.: 29	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-18
+GSM1070923	VFP-0030_G2_DF [HG-Focus]	patient no.: 30	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-11-09
+GSM1070924	VFP-0030_G5_DF [HG-Focus]	patient no.: 30	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-09
+GSM1070925	VFP-0030_G7_DF [HG-Focus]	patient no.: 30	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-09
+GSM1070926	VFP-0031_G4_DF [HG-Focus]	patient no.: 31	Stage: G4	infecting serotype: 4	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2008-01-16
+GSM1070927	VFP-0031_G5_DF [HG-Focus]	patient no.: 31	Stage: G5	infecting serotype: 4	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-16
+GSM1070928	VFP-0031_G7_DF [HG-Focus]	patient no.: 31	Stage: G7	infecting serotype: 4	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-16
+GSM1070929	VFP-0033_G2_DF [HG-Focus]	patient no.: 33	Stage: G2	infecting serotype: 4	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-11-15
+GSM1070930	VFP-0033_G5_DF [HG-Focus]	patient no.: 33	Stage: G5	infecting serotype: 4	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-15
+GSM1070931	VFP-0033_G7_DF [HG-Focus]	patient no.: 33	Stage: G7	infecting serotype: 4	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-15
+GSM1070932	VFP-0034_G3_DF [HG-Focus]	patient no.: 34	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-11-15
+GSM1070933	VFP-0034_G6_DF [HG-Focus]	patient no.: 34	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-15
+GSM1070934	VFP-0034_G7_DF [HG-Focus]	patient no.: 34	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-15
+GSM1070935	VFP-0037_G4_DF [HG-Focus]	patient no.: 37	Stage: G4	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-28
+GSM1070936	VFP-0037_G6_DF [HG-Focus]	patient no.: 37	Stage: G6	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-28
+GSM1070937	VFP-0037_G7_DF [HG-Focus]	patient no.: 37	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-28
+GSM1070938	VFP-0039_G2_DF [HG-Focus]	patient no.: 39	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-11-28
+GSM1070939	VFP-0039_G5_DF [HG-Focus]	patient no.: 39	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-11-28
+GSM1070940	VFP-0039_G7_DF [HG-Focus]	patient no.: 39	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-28
+GSM1070941	VFP-0040_G2_DF [HG-Focus]	patient no.: 40	Stage: G2	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-11-30
+GSM1070942	VFP-0040_G4_DF [HG-Focus]	patient no.: 40	Stage: G4	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-30
+GSM1070943	VFP-0040_G6_DF [HG-Focus]	patient no.: 40	Stage: G6	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df2	scan date: 2007-11-30
+GSM1070944	VFP-0041_G3_DF [HG-Focus]	patient no.: 41	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2008-01-09
+GSM1070945	VFP-0041_G4_DF [HG-Focus]	patient no.: 41	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2008-01-09
+GSM1070946	VFP-0041_G5_DF [HG-Focus]	patient no.: 41	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 5	scan date: 2008-01-09
+GSM1070947	VFP-0041_G6(1)_DF [HG-Focus]	patient no.: 41	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2008-01-09
+GSM1070948	VFP-0041_G6(2)_DF [HG-Focus]	patient no.: 41	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 6	scan date: 2008-01-09
+GSM1070949	VFP-0041_G7_DF [HG-Focus]	patient no.: 41	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-09
+GSM1070950	VFP-0045_G4_DF [HG-Focus]	patient no.: 45	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-30
+GSM1070951	VFP-0045_G5_DF [HG-Focus]	patient no.: 45	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-30
+GSM1070952	VFP-0045_G7_DF [HG-Focus]	patient no.: 45	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-30
+GSM1070953	VFP-0047_G4_DHF [HG-Focus]	patient no.: 47	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: 4	scan date: 2007-11-30
+GSM1070954	VFP-0047_G5_DHF [HG-Focus]	patient no.: 47	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-30
+GSM1070955	VFP-0047_G7_DHF [HG-Focus]	patient no.: 47	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: c	scan date: 2007-11-30
+GSM1070956	VFP-0053_G3_DF [HG-Focus]	patient no.: 53	Stage: G3	infecting serotype: 2	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2007-11-30
+GSM1070957	VFP-0053_G4_DF [HG-Focus]	patient no.: 53	Stage: G4	infecting serotype: 2	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-11-30
+GSM1070958	VFP-0053_G7_DF [HG-Focus]	patient no.: 53	Stage: G7	infecting serotype: 2	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-11-30
+GSM1070959	VFP-0056_G2_DF [HG-Focus]	patient no.: 56	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-09
+GSM1070960	VFP-0056_G3_DF [HG-Focus]	patient no.: 56	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2008-01-09
+GSM1070961	VFP-0056_G4_DF [HG-Focus]	patient no.: 56	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2008-01-09
+GSM1070962	VFP-0056_G5_DF [HG-Focus]	patient no.: 56	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-09
+GSM1070963	VFP-0056_G6_DF [HG-Focus]	patient no.: 56	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df4	scan date: 2008-01-09
+GSM1070964	VFP-0056_G7_DF [HG-Focus]	patient no.: 56	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-09
+GSM1070965	VFP-0057_G1_DF [HG-Focus]	patient no.: 57	Stage: G1	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 1	scan date: 2008-01-11
+GSM1070966	VFP-0057_G2_DF [HG-Focus]	patient no.: 57	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-11
+GSM1070967	VFP-0057_G3_DF [HG-Focus]	patient no.: 57	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2008-01-11
+GSM1070968	VFP-0057_G4_DF [HG-Focus]	patient no.: 57	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2008-01-11
+GSM1070969	VFP-0057_G6_DF [HG-Focus]	patient no.: 57	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df3	scan date: 2008-01-11
+GSM1070970	VFP-0057_G7_DF [HG-Focus]	patient no.: 57	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-11
+GSM1070971	VFP-0060_G3_DHF [HG-Focus]	patient no.: 60	Stage: G3	infecting serotype: 2	phase: Early Acute	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: 3	scan date: 2007-12-05
+GSM1070972	VFP-0060_G4_DHF [HG-Focus]	patient no.: 60	Stage: G4	infecting serotype: 2	phase: Late Acute	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: 4	scan date: 2007-12-05
+GSM1070973	VFP-0060_G7_DHF [HG-Focus]	patient no.: 60	Stage: G7	infecting serotype: 2	phase: Convalenscent	severity: DHF (dengue hemorrhagic fever)	fever days or defervescent (df) days: c	scan date: 2007-12-05
+GSM1070974	VFP-0063_G3_DF [HG-Focus]	patient no.: 63	Stage: G3	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2007-12-05
+GSM1070975	VFP-0063_G5_DF [HG-Focus]	patient no.: 63	Stage: G5	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-12-05
+GSM1070976	VFP-0063_G7_DF [HG-Focus]	patient no.: 63	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-05
+GSM1070977	VFP-0064_G2_DF [HG-Focus]	patient no.: 64	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-11
+GSM1070978	VFP-0064_G3_DF [HG-Focus]	patient no.: 64	Stage: G3	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2008-01-11
+GSM1070979	VFP-0064_G4_DF [HG-Focus]	patient no.: 64	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2008-01-11
+GSM1070980	VFP-0064_G5_DF [HG-Focus]	patient no.: 64	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 5	scan date: 2008-01-11
+GSM1070981	VFP-0064_G6_DF [HG-Focus]	patient no.: 64	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2008-01-11
+GSM1070982	VFP-0064_G7_DF [HG-Focus]	patient no.: 64	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-11
+GSM1070983	VFP-0070_G2_DF [HG-Focus]	patient no.: 70	Stage: G2	infecting serotype: 2	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-12-05
+GSM1070984	VFP-0070_G4_DF [HG-Focus]	patient no.: 70	Stage: G4	infecting serotype: 2	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-12-05
+GSM1070985	VFP-0070_G7_DF [HG-Focus]	patient no.: 70	Stage: G7	infecting serotype: 2	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-05
+GSM1070986	VFP-0075_G2_DF [HG-Focus]	patient no.: 75	Stage: G2	infecting serotype: 2	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-12-05
+GSM1070987	VFP-0075_G5_DF [HG-Focus]	patient no.: 75	Stage: G5	infecting serotype: 2	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df2	scan date: 2007-12-05
+GSM1070988	VFP-0075_G7_DF [HG-Focus]	patient no.: 75	Stage: G7	infecting serotype: 2	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-05
+GSM1070989	VFP-0081_G2_DF [HG-Focus]	patient no.: 81	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-12-07
+GSM1070990	VFP-0081_G6_DF [HG-Focus]	patient no.: 81	Stage: G6	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-12-07
+GSM1070991	VFP-0081_G7_DF [HG-Focus]	patient no.: 81	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-07
+GSM1070992	VFP-0082_G4_DF [HG-Focus]	patient no.: 82	Stage: G4	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2007-12-07
+GSM1070993	VFP-0082_G5_DF [HG-Focus]	patient no.: 82	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2007-12-07
+GSM1070994	VFP-0082_G7_DF [HG-Focus]	patient no.: 82	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-07
+GSM1070995	VFP-0083_G2_DF [HG-Focus]	patient no.: 83	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-12-07
+GSM1070996	VFP-0083_G5_DF [HG-Focus]	patient no.: 83	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df2	scan date: 2007-12-07
+GSM1070997	VFP-0083_G7_DF [HG-Focus]	patient no.: 83	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-07
+GSM1070998	VFP-0085_G3_DF [HG-Focus]	patient no.: 85	Stage: G3	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2007-12-07
+GSM1070999	VFP-0085_G5_DF [HG-Focus]	patient no.: 85	Stage: G5	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-12-07
+GSM1071000	VFP-0085_G7_DF [HG-Focus]	patient no.: 85	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-07
+GSM1071001	VFP-0087_G3_DF [HG-Focus]	patient no.: 87	Stage: G3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2007-12-12	
+GSM1071002	VFP-0087_G5_DF [HG-Focus]	patient no.: 87	Stage: G5	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-12-12	
+GSM1071003	VFP-0087_G7_DF [HG-Focus]	patient no.: 87	Stage: G7	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-12	
+GSM1071004	VFP-0090_G2_DF [HG-Focus]	patient no.: 90	Stage: G2	infecting serotype: 4	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2007-12-12
+GSM1071005	VFP-0090_G5_DF [HG-Focus]	patient no.: 90	Stage: G5	infecting serotype: 4	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-12-12
+GSM1071006	VFP-0090_G7_DF [HG-Focus]	patient no.: 90	Stage: G7	infecting serotype: 4	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-12
+GSM1071007	VFP-0101_G3_DF [HG-Focus]	patient no.: 101	Stage: G3	infecting serotype: 2	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2007-12-12
+GSM1071008	VFP-0101_G4_DF [HG-Focus]	patient no.: 101	Stage: G4	infecting serotype: 2	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2007-12-12
+GSM1071009	VFP-0101_G7_DF [HG-Focus]	patient no.: 101	Stage: G7	infecting serotype: 2	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-12
+GSM1071010	VFP-0104_G3_DF [HG-Focus]	patient no.: 104	Stage: G3	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2007-12-12
+GSM1071011	VFP-0104_G6_DF [HG-Focus]	patient no.: 104	Stage: G6	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df2	scan date: 2007-12-12
+GSM1071012	VFP-0104_G7_DF [HG-Focus]	patient no.: 104	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2007-12-12
+GSM1071013	VFP-0105_G3_DF [HG-Focus]	patient no.: 105	Stage: G3	infecting serotype: 4	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 3	scan date: 2008-01-03
+GSM1071014	VFP-0105_G4_DF [HG-Focus]	patient no.: 105	Stage: G4	infecting serotype: 4	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df3	scan date: 2008-01-03
+GSM1071015	VFP-0105_G7_DF [HG-Focus]	patient no.: 105	Stage: G7	infecting serotype: 4	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-03
+GSM1071016	VFP-0111_G4_DF [HG-Focus]	patient no.: 111	Stage: G4	infecting serotype: 4	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2008-01-25
+GSM1071017	VFP-0111_G6_DF [HG-Focus]	patient no.: 111	Stage: G6	infecting serotype: 4	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-25
+GSM1071018	VFP-0111_G7_DF [HG-Focus]	patient no.: 111	Stage: G7	infecting serotype: 4	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-25
+GSM1071019	VFP-0113_G2_DF [HG-Focus]	patient no.: 113	Stage: G2	infecting serotype: 3	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-03
+GSM1071020	VFP-0113_G6_DF [HG-Focus]	patient no.: 113	Stage: G6	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-03
+GSM1071021	VFP-0113_G7_DF [HG-Focus]	patient no.: 113	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-03
+GSM1071022	VFP-0117_G4_DF [HG-Focus]	patient no.: 117	Stage: G4	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 4	scan date: 2008-01-04
+GSM1071023	VFP-0117_G6_DF [HG-Focus]	patient no.: 117	Stage: G6	infecting serotype: 3	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-04
+GSM1071024	VFP-0117_G7_DF [HG-Focus]	patient no.: 117	Stage: G7	infecting serotype: 3	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-04
+GSM1071025	VFP-0129_G1_DF [HG-Focus]	patient no.: 129	Stage: G1	infecting serotype: 4	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 1	scan date: 2008-01-04
+GSM1071026	VFP-0129_G4_DF [HG-Focus]	patient no.: 129	Stage: G4	infecting serotype: 4	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df2	scan date: 2008-01-04
+GSM1071027	VFP-0129_G7_DF [HG-Focus]	patient no.: 129	Stage: G7	infecting serotype: 4	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-04
+GSM1071028	VFP-0142_G0_DF [HG-Focus]	patient no.: 142	Stage: G0	infecting serotype: 2	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 0	scan date: 2008-01-16
+GSM1071029	VFP-0142_G3_DF [HG-Focus]	patient no.: 142	Stage: G3	infecting serotype: 2	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df0	scan date: 2008-01-16
+GSM1071030	VFP-0142_G7_DF [HG-Focus]	patient no.: 142	Stage: G7	infecting serotype: 2	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-16
+GSM1071031	VFP-0144_G2_DF [HG-Focus]	patient no.: 144	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-16
+GSM1071032	VFP-0144_G5_DF [HG-Focus]	patient no.: 144	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df1	scan date: 2008-01-16
+GSM1071033	VFP-0144_G7_DF [HG-Focus]	patient no.: 144	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-16
+GSM1071034	VFP-0145_G2_DF [HG-Focus]	patient no.: 145	Stage: G2	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 2	scan date: 2008-01-16
+GSM1071035	VFP-0145_G5_DF [HG-Focus]	patient no.: 145	Stage: G5	infecting serotype: 1	phase: Late Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: df2	scan date: 2008-01-16
+GSM1071036	VFP-0145_G7_DF [HG-Focus]	patient no.: 145	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-16
+GSM1071037	VFP-0003_G7_DF [HG-Focus]	patient no.: 3	Stage: G7	infecting serotype: 1	phase: Convalenscent	severity: DF (dengue fever)	fever days or defervescent (df) days: c	scan date: 2008-01-24
+GSM1071038	VFP-0029_G1_DF [HG-Focus]	patient no.: 29	Stage: G1	infecting serotype: 1	phase: Early Acute	severity: DF (dengue fever)	fever days or defervescent (df) days: 1	scan date: 2008-01-18
