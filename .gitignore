@@ -1,7 +1,22 @@
-__pycache__/, .venv/, *.pyc
+# Python environments
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Logs and archives
 logs/
 output.log
 scripts_outcomes/runs/_archive/
+
+# Large/generated outputs
 scripts_outcomes/processed/*.tsv.gz
 scripts_outcomes/raw_series/
-data/interim/, data/metadata/, data/processed/
+
+# Intermediate data (raw data stays tracked)
+data/interim/
+data/metadata/
+data/processed/
