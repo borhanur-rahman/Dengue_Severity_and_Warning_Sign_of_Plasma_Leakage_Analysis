@@ -11,4 +11,4 @@ severity	GO_BP	positive regulation of double-strand break repair via nonhomologo
 severity	GO_BP	T cell mediated immunity (GO:0002456)	2/16	0.0007187392304892979	0.0367275746780031	429.45537567816734	CD70;BTN3A2
 severity	GO_BP	adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains (GO:0002460)	2/20	0.0011307590059983	0.0481514876720953	313.0461870363529	CD70;BTN3A2
 severity	GO_BP	positive regulation of interferon-alpha production (GO:0032727)	2/20	0.0011307590059983	0.0481514876720953	313.0461870363529	IFIH1;STAT1
-leakage	KEGG	Fanconi anemia pathway	3/54	0.0003333415993294188	0.0243339367510475	199.39701474295643	POLI;FANCC;FANCE
+warning_sign	KEGG	Fanconi anemia pathway	3/54	0.0003333415993294188	0.0243339367510475	199.39701474295643	POLI;FANCC;FANCE

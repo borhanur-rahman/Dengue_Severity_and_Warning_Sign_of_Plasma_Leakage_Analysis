@@ -1,126 +1,643 @@
 #!/usr/bin/env python3
-"""Step 06 — export per-axis enriched-gene unions for STRING -> Cytoscape -> cytoHubba.
-
-Input : v2/runs/<RUN_ID>/enrichment/{axis}_enriched_genes_union.tsv (from step 05)
-Output: v2/runs/<RUN_ID>/ppi/
-Method unchanged. STRING/cytoHubba performed manually; HOWTO records the exact
-STRING confidence and cytoHubba method for reproducibility.
 """
+Step 07 — prepare per-axis enriched-gene inputs for STRING/Cytoscape/cytoHubba.
+
+Purpose
+-------
+Prepare the genes associated with significant GO-BP and/or KEGG enrichment
+terms from Step 06 for downstream protein-protein interaction (PPI) analysis.
+
+The analysis is performed independently for:
+
+    1. warning_sign
+    2. severity
+
+Input
+-----
+Per-axis enriched-gene unions produced by Step 06:
+
+scripts_outcomes/runs/<RUN_ID>/enrichment/
+    warning_sign_enriched_genes_union.tsv
+    severity_enriched_genes_union.tsv
+
+If a precomputed enriched-gene union file is unavailable, the script
+reconstructs the gene set from:
+
+    <axis>_GO_BP_significant.tsv
+    <axis>_KEGG_significant.tsv
+
+Output
+------
+Results are written to:
+
+scripts_outcomes/runs/<RUN_ID>/ppi/
+
+For each axis, the script produces:
+
+    <axis>_ppi_genes.txt
+        One gene symbol per line for submission to STRING.
+
+    <axis>_ppi_genes_oneline.txt
+        The same genes written on one line.
+
+    <axis>_node_attributes.tsv
+        Node-level annotation table describing whether each gene contributed
+        to significant GO-BP and/or KEGG terms and listing the associated terms.
+
+The script also creates:
+
+    HOWTO_STRING_Cytoscape_cytoHubba.txt
+
+which records the downstream PPI workflow and configured analysis parameters.
+
+Method
+------
+The input gene set for each axis is the union of genes represented in
+significant GO-BP and KEGG enrichment terms from Step 06.
+
+Only gene symbols are exported. Blank values and Ensembl identifiers
+beginning with "ENSG" are excluded.
+
+The exported genes are intended for downstream STRING interaction analysis,
+followed by Cytoscape visualization and cytoHubba-based hub ranking.
+
+Reproducibility
+---------------
+The following configured parameters are recorded in the generated HOWTO file:
+
+    - STRING minimum interaction score
+    - primary cytoHubba ranking method
+
+Current values are read from config/paths.yaml.
+
+Important
+---------
+This step does not query STRING and does not calculate a PPI network itself.
+It only prepares reproducible input files and node annotations for downstream
+PPI analysis.
+
+Hub genes identified downstream should be described as candidate hub genes
+unless supported by independent experimental validation.
+"""
+
 from pathlib import Path
 
 import pandas as pd
 
-from paths import CFG, seed_everything, resolve, read_dir, run_dir
+from paths import (
+    CFG,
+    seed_everything,
+    resolve,
+    read_dir,
+    run_dir,
+)
+
+
+# =====================================================================
+# Global setup
+# =====================================================================
 
 seed_everything()
 
-AXES = list(CFG["ppi"]["axes"])
-STRING_MIN_SCORE = float(CFG["ppi"]["string_min_score"])
+
+# =====================================================================
+# Configuration
+# =====================================================================
+
+AXES = list(
+    CFG["ppi"]["axes"]
+)
+
+STRING_MIN_SCORE = float(
+    CFG["ppi"]["string_min_score"]
+)
+
 CYTOHUBBA_METHOD = CFG["ppi"]["cytohubba_method"]
 
+
 RUN_ID = None
-ENR: Path = None
-OUT: Path = None
+
+ENR: Path | None = None
+OUT: Path | None = None
+
+
+# =====================================================================
+# Gene extraction helpers
+# =====================================================================
 
 def genes_from_terms(df):
-    s = set()
-    for g in df.get("genes", pd.Series(dtype=str)).dropna():
-        s |= {x.strip() for x in str(g).split(";") if x.strip()}
-    return s
+    """
+    Extract the union of genes represented in enrichment terms.
 
+    Enrichr stores genes contributing to a term as semicolon-separated
+    gene symbols in the 'genes' column.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        GO-BP or KEGG enrichment table.
+
+    Returns
+    -------
+    set[str]
+        Unique gene symbols represented across the enrichment terms.
+    """
+
+    genes = set()
+
+    for value in df.get(
+        "genes",
+        pd.Series(dtype=str),
+    ).dropna():
+
+        genes |= {
+            gene.strip()
+            for gene in str(value).split(";")
+            if gene.strip()
+        }
+
+    return genes
+
+
+# =====================================================================
+# Load enriched-gene union
+# =====================================================================
 
 def load_axis_union(axis):
-    """Prefer the ready-made per-axis enriched-gene union; else rebuild from GO/KEGG tables."""
-    ready = ENR / f"{axis}_enriched_genes_union.tsv"
-    if ready.exists():
-        genes = pd.read_csv(ready, sep="\t")["gene"].astype(str).tolist()
-        src = "enriched_genes_union.tsv"
-    else:
-        go_f = ENR / f"{axis}_GO_BP_significant.tsv"
-        kegg_f = ENR / f"{axis}_KEGG_significant.tsv"
-        go = pd.read_csv(go_f, sep="\t") if go_f.exists() else pd.DataFrame()
-        kegg = pd.read_csv(kegg_f, sep="\t") if kegg_f.exists() else pd.DataFrame()
-        genes = sorted(genes_from_terms(go) | genes_from_terms(kegg))
-        src = "GO_BP + KEGG significant tables"
-    genes = sorted({g for g in genes if g and not str(g).upper().startswith("ENSG")})
-    return genes, src
+    """
+    Load the enriched-gene union for one analysis axis.
 
+    The ready-made enriched-gene union generated by Step 06 is preferred.
+
+    If that file is unavailable, the gene set is reconstructed from the
+    significant GO-BP and KEGG enrichment tables.
+
+    Parameters
+    ----------
+    axis : str
+        Analysis axis, e.g. "warning_sign" or "severity".
+
+    Returns
+    -------
+    genes : list[str]
+        Sorted unique gene symbols.
+
+    source : str
+        Description of the source used to obtain the genes.
+    """
+
+    ready = (
+        ENR
+        / f"{axis}_enriched_genes_union.tsv"
+    )
+
+    if ready.exists():
+
+        df = pd.read_csv(
+            ready,
+            sep="\t",
+        )
+
+        if "gene" not in df.columns:
+            raise SystemExit(
+                f"[{axis}] required column 'gene' not found in {ready}"
+            )
+
+        genes = (
+            df["gene"]
+            .astype(str)
+            .tolist()
+        )
+
+        source = "enriched_genes_union.tsv"
+
+    else:
+
+        go_file = (
+            ENR
+            / f"{axis}_GO_BP_significant.tsv"
+        )
+
+        kegg_file = (
+            ENR
+            / f"{axis}_KEGG_significant.tsv"
+        )
+
+        go = (
+            pd.read_csv(
+                go_file,
+                sep="\t",
+            )
+            if go_file.exists()
+            else pd.DataFrame()
+        )
+
+        kegg = (
+            pd.read_csv(
+                kegg_file,
+                sep="\t",
+            )
+            if kegg_file.exists()
+            else pd.DataFrame()
+        )
+
+        genes = sorted(
+            genes_from_terms(go)
+            | genes_from_terms(kegg)
+        )
+
+        source = (
+            "GO-BP + KEGG significant tables"
+        )
+
+    # Defensive cleanup.
+    genes = sorted(
+        {
+            str(gene).strip()
+            for gene in genes
+            if str(gene).strip()
+            and not str(gene).upper().startswith("ENSG")
+        }
+    )
+
+    return genes, source
+
+
+# =====================================================================
+# Node annotations
+# =====================================================================
 
 def per_gene_membership(axis, genes):
-    """Annotate each gene with which library/terms it came from (handy in Cytoscape)."""
-    go_f = ENR / f"{axis}_GO_BP_significant.tsv"; kegg_f = ENR / f"{axis}_KEGG_significant.tsv"
-    go = pd.read_csv(go_f, sep="\t") if go_f.exists() else pd.DataFrame()
-    kegg = pd.read_csv(kegg_f, sep="\t") if kegg_f.exists() else pd.DataFrame()
+    """
+    Build node-level GO-BP/KEGG annotations for Cytoscape.
+
+    For every enriched gene, record:
+
+        - whether it occurs in significant GO-BP terms
+        - whether it occurs in significant KEGG terms
+        - number of GO-BP terms containing the gene
+        - number of KEGG terms containing the gene
+        - associated GO-BP term names
+        - associated KEGG term names
+
+    Parameters
+    ----------
+    axis : str
+        Analysis axis.
+
+    genes : list[str]
+        Enriched gene symbols.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Node-annotation table for Cytoscape.
+    """
+
+    go_file = (
+        ENR
+        / f"{axis}_GO_BP_significant.tsv"
+    )
+
+    kegg_file = (
+        ENR
+        / f"{axis}_KEGG_significant.tsv"
+    )
+
+    go = (
+        pd.read_csv(
+            go_file,
+            sep="\t",
+        )
+        if go_file.exists()
+        else pd.DataFrame()
+    )
+
+    kegg = (
+        pd.read_csv(
+            kegg_file,
+            sep="\t",
+        )
+        if kegg_file.exists()
+        else pd.DataFrame()
+    )
 
     def terms_for(df, gene):
+        """
+        Return enrichment terms containing one gene.
+        """
+
         hits = []
-        for _, r in df.iterrows():
-            mem = {x.strip() for x in str(r.get("genes", "")).split(";") if x.strip()}
-            if gene in mem:
-                hits.append(str(r.get("term", "")))
+
+        for _, row in df.iterrows():
+
+            members = {
+                item.strip()
+                for item in str(
+                    row.get(
+                        "genes",
+                        "",
+                    )
+                ).split(";")
+                if item.strip()
+            }
+
+            if gene in members:
+                hits.append(
+                    str(
+                        row.get(
+                            "term",
+                            "",
+                        )
+                    )
+                )
+
         return hits
 
     rows = []
-    for g in genes:
-        gt = terms_for(go, g); kt = terms_for(kegg, g)
-        rows.append({"gene": g, "in_GO_BP": bool(gt), "in_KEGG": bool(kt),
-                     "n_GO_terms": len(gt), "n_KEGG_terms": len(kt),
-                     "GO_terms": " | ".join(gt), "KEGG_terms": " | ".join(kt)})
-    return pd.DataFrame(rows)
 
+    for gene in genes:
+
+        go_terms = terms_for(
+            go,
+            gene,
+        )
+
+        kegg_terms = terms_for(
+            kegg,
+            gene,
+        )
+
+        rows.append(
+            {
+                "gene": gene,
+                "in_GO_BP": bool(go_terms),
+                "in_KEGG": bool(kegg_terms),
+                "n_GO_terms": len(go_terms),
+                "n_KEGG_terms": len(kegg_terms),
+                "GO_terms": " | ".join(go_terms),
+                "KEGG_terms": " | ".join(kegg_terms),
+            }
+        )
+
+    return pd.DataFrame(
+        rows
+    )
+
+
+# =====================================================================
+# Main workflow
+# =====================================================================
 
 def main():
-    global ENR, OUT
-    rid = resolve(RUN_ID)
-    ENR = read_dir(rid, "enrichment")
-    OUT = run_dir(rid, "ppi", config=CFG["ppi"])
-    print(f"  reading: {ENR}\n  writing: {OUT}")
-    print("=" * 70 + "\nPPI INPUT EXPORT (STRING -> Cytoscape -> cytoHubba)\n" + "=" * 70)
+
+    global ENR
+    global OUT
+
+    # -----------------------------------------------------------------
+    # Resolve pipeline run
+    # -----------------------------------------------------------------
+
+    rid = resolve(
+        RUN_ID
+    )
+
+    ENR = read_dir(
+        rid,
+        "enrichment",
+    )
+
+    OUT = run_dir(
+        rid,
+        "ppi",
+        config=CFG["ppi"],
+    )
+
+    print(
+        f"  reading: {ENR}\n"
+        f"  writing: {OUT}"
+    )
+
+    print(
+        "=" * 70
+        + "\nPPI INPUT EXPORT "
+        "(STRING -> Cytoscape -> cytoHubba)\n"
+        + "=" * 70
+    )
+
+    # -----------------------------------------------------------------
+    # Export genes independently for each axis
+    # -----------------------------------------------------------------
+
     for axis in AXES:
-        genes, src = load_axis_union(axis)
+
+        genes, source = load_axis_union(
+            axis
+        )
+
         if not genes:
-            print(f"\n[{axis}] NO enriched genes found (source: {src}). "
-                  f"Run top50_enrichment.py first, or the axis had no significant terms.")
+
+            print(
+                f"\n[{axis}] NO enriched genes found "
+                f"(source: {source}). "
+                "Run 06_run_go_kegg_enrichment.py first, "
+                "or this axis had no significant enrichment terms."
+            )
+
             continue
 
-        plain = OUT / f"{axis}_ppi_genes.txt"
-        plain.write_text("\n".join(genes) + "\n")
-        (OUT / f"{axis}_ppi_genes_oneline.txt").write_text(" ".join(genes) + "\n")
+        # -------------------------------------------------------------
+        # One gene per line
+        # -------------------------------------------------------------
 
-        ann = per_gene_membership(axis, genes)
-        ann.to_csv(OUT / f"{axis}_node_attributes.tsv", sep="\t", index=False)
+        plain_file = (
+            OUT
+            / f"{axis}_ppi_genes.txt"
+        )
 
-        print(f"\n[{axis}] {len(genes)} enriched genes (from {src})")
-        print(f"  genes: {', '.join(genes[:20])}{' ...' if len(genes) > 20 else ''}")
-        print(f"  -> {plain.name}  (paste into STRING: https://string-db.org, 'Multiple proteins', Homo sapiens)")
-        print(f"  -> {axis}_node_attributes.tsv  (import as node table in Cytoscape)")
+        plain_file.write_text(
+            "\n".join(genes)
+            + "\n"
+        )
 
-    (OUT / "HOWTO_STRING_Cytoscape_cytoHubba.txt").write_text(
-        "PPI + hub-gene workflow (per axis)\n"
-        "==================================\n\n"
-        f"REPRODUCIBILITY RECORD: STRING min score = {STRING_MIN_SCORE:.3f}, "
-        f"cytoHubba method = {CYTOHUBBA_METHOD}. Report these in the manuscript.\n\n"
-        "1. STRING (https://string-db.org)\n"
-        "   - Search > 'Multiple proteins'\n"
-        "   - Paste the contents of <axis>_ppi_genes.txt\n"
-        "   - Organism: Homo sapiens\n"
-        f"   - Minimum required interaction score: {STRING_MIN_SCORE:.3f} (high confidence)\n"
-        "   - Export > send network to Cytoscape (stringApp), or download 'network coordinates'\n\n"
+        # -------------------------------------------------------------
+        # One-line gene list
+        # -------------------------------------------------------------
+
+        one_line_file = (
+            OUT
+            / f"{axis}_ppi_genes_oneline.txt"
+        )
+
+        one_line_file.write_text(
+            " ".join(genes)
+            + "\n"
+        )
+
+        # -------------------------------------------------------------
+        # Cytoscape node annotations
+        # -------------------------------------------------------------
+
+        annotations = per_gene_membership(
+            axis,
+            genes,
+        )
+
+        annotation_file = (
+            OUT
+            / f"{axis}_node_attributes.tsv"
+        )
+
+        annotations.to_csv(
+            annotation_file,
+            sep="\t",
+            index=False,
+        )
+
+        # -------------------------------------------------------------
+        # Console summary
+        # -------------------------------------------------------------
+
+        print(
+            f"\n[{axis}] "
+            f"{len(genes)} enriched genes "
+            f"(from {source})"
+        )
+
+        print(
+            "  genes: "
+            + ", ".join(
+                genes[:20]
+            )
+            + (
+                " ..."
+                if len(genes) > 20
+                else ""
+            )
+        )
+
+        print(
+            f"  -> {plain_file.name} "
+            "(input gene list for STRING)"
+        )
+
+        print(
+            f"  -> {annotation_file.name} "
+            "(node-annotation table for Cytoscape)"
+        )
+
+    # =================================================================
+    # Reproducible downstream workflow documentation
+    # =================================================================
+
+    howto = (
+        "PPI and candidate hub-gene workflow (per axis)\n"
+        "================================================\n\n"
+
+        "PURPOSE\n"
+        "-------\n"
+        "Use the enriched genes exported by Step 07 to construct a STRING "
+        "protein-protein interaction network for each axis, visualize the "
+        "network in Cytoscape, and rank candidate hub genes using cytoHubba.\n\n"
+
+        "REPRODUCIBILITY RECORD\n"
+        "----------------------\n"
+        f"STRING minimum interaction score: {STRING_MIN_SCORE:.3f}\n"
+        f"Primary cytoHubba ranking method: {CYTOHUBBA_METHOD}\n\n"
+
+        "These parameters are read from config/paths.yaml and should be "
+        "reported consistently in the manuscript.\n\n"
+
+        "1. STRING\n"
+        "--------\n"
+        "Website: https://string-db.org\n\n"
+
+        "For each axis:\n"
+        "   - Choose 'Multiple proteins'.\n"
+        "   - Paste the contents of <axis>_ppi_genes.txt.\n"
+        "   - Select organism: Homo sapiens.\n"
+        f"   - Set minimum required interaction score to "
+        f"{STRING_MIN_SCORE:.3f}.\n"
+        "   - Construct the interaction network.\n"
+        "   - Export the STRING interaction network or transfer it directly "
+        "to Cytoscape using stringApp when available.\n\n"
+
+        "Important: record the STRING database/version and network retrieval "
+        "date when performing the final analysis, because STRING is an "
+        "externally maintained resource that may be updated over time.\n\n"
+
         "2. Cytoscape\n"
-        "   - Load the STRING network (stringApp) for the axis\n"
-        "   - File > Import > Table from file: <axis>_node_attributes.tsv (key column = gene)\n\n"
-        "3. cytoHubba (Apps > cytoHubba)\n"
-        f"   - Target network: the axis network\n"
-        f"   - Compute node scores by: {CYTOHUBBA_METHOD} (recommended), also Degree and MNC\n"
-        "   - Export the top 10 (or top 15) ranked nodes = HUB GENES for that axis\n\n"
-        "Report hubs per axis. Because the input genes come from enriched pathways,\n"
-        "hubs will tend to be the central genes of each axis's dominant program\n"
-        "(e.g. interferon hub for severity, chemokine/cytotoxic hub for leakage) -\n"
-        "frame them as 'central genes of the axis programme', which is standard.\n")
+        "------------\n"
+        "For each axis:\n"
+        "   - Load the corresponding STRING interaction network.\n"
+        "   - Import <axis>_node_attributes.tsv as a node table.\n"
+        "   - Use the 'gene' column as the node-matching key where applicable.\n"
+        "   - Confirm that node identifiers are correctly matched before "
+        "performing hub analysis.\n\n"
 
-    print(f"\n[SAVED] -> {OUT}")
-    print(f"[NEXT] open {OUT/'HOWTO_STRING_Cytoscape_cytoHubba.txt'} for the manual STRING/Cytoscape steps")
-    print("[DONE]")
+        "3. cytoHubba\n"
+        "------------\n"
+        "Open Apps > cytoHubba and select the corresponding axis network.\n\n"
+
+        f"Primary hub-ranking method: {CYTOHUBBA_METHOD}\n\n"
+
+        "Rank nodes using the configured primary method and export the "
+        "highest-ranked nodes for downstream interpretation.\n\n"
+
+        "If Degree or MNC rankings are also examined, treat them as secondary "
+        "or sensitivity analyses rather than replacing the predefined primary "
+        "ranking method.\n\n"
+
+        "4. Reporting\n"
+        "------------\n"
+        "Report candidate hub genes separately for the severity and "
+        "warning-sign axes.\n\n"
+
+        "The final manuscript should report, at minimum:\n"
+        "   - input gene-selection procedure\n"
+        "   - STRING database/version if available\n"
+        "   - network retrieval date\n"
+        "   - organism\n"
+        "   - minimum STRING interaction score\n"
+        "   - number of input genes\n"
+        "   - number of network nodes and edges\n"
+        "   - primary cytoHubba ranking method\n"
+        "   - number of top-ranked candidate hub genes reported\n\n"
+
+        "Biological interpretation should be based on the observed enrichment "
+        "and PPI results. Do not assign pathway-specific interpretations in "
+        "advance of the observed network results.\n\n"
+
+        "Hub genes identified computationally should be described as "
+        "'candidate hub genes' unless independently validated experimentally "
+        "or by an additional external dataset.\n"
+    )
+
+    howto_file = (
+        OUT
+        / "HOWTO_STRING_Cytoscape_cytoHubba.txt"
+    )
+
+    howto_file.write_text(
+        howto
+    )
+
+    # =================================================================
+    # Final messages
+    # =================================================================
+
+    print(
+        f"\n[SAVED] -> {OUT}"
+    )
+
+    print(
+        f"[NEXT] open {howto_file} "
+        "for the documented STRING/Cytoscape/cytoHubba workflow"
+    )
+
+    print(
+        "[DONE]"
+    )
 
 
 if __name__ == "__main__":

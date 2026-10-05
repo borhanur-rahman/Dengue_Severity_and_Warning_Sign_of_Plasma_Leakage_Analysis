@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Shared config + run-directory helper for the v2 pipeline.
+"""Shared config + run-directory helper for the pipeline.
 Put in scripts/ next to the numbered steps.
 
-Loads config/v2_config.yaml as CFG and seeds RNGs. Also manages the per-run
+Loads config/paths.yaml as CFG and seeds RNGs. Also manages the per-run
 output directories so re-running a configuration archives (never overwrites)
 the previous output.
 
 PATH SAFETY: every script imports this module first, so anchoring the working
 directory to the project root here makes all relative paths in the pipeline
-(config, data/, v2/) resolve correctly no matter where the runner
+(config, data/) resolve correctly no matter where the runner
 (Code Ocean run.sh, cron, an IDE) invokes python from.
 """
 from __future__ import annotations
@@ -29,7 +29,7 @@ os.chdir(PROJECT_ROOT)
 
 CONFIG_PATH = PROJECT_ROOT / "config" / "paths.yaml"
 if not CONFIG_PATH.exists():
-    sys.exit(f"Missing {CONFIG_PATH}. Copy v2_config.yaml into config/.")
+    sys.exit(f"Missing {CONFIG_PATH}. Copy paths.yaml into config/.")
 CFG: dict = yaml.safe_load(CONFIG_PATH.read_text())
 
 _o = CFG["output"]
@@ -96,7 +96,7 @@ def resolve(run_id: str | None) -> str:
     if run_id:
         print(f"  run id: {run_id} (explicit)"); return run_id
     if not LATEST.exists():
-        sys.exit("No v2/runs/_latest.txt — run step 04 first, or set RUN_ID.")
+        sys.exit("No runs/_latest.txt — run the earlier steps first, or set RUN_ID.")
     rid = LATEST.read_text().strip()
     print(f"  run id: {rid} (from _latest.txt)"); return rid
 

@@ -1,4 +1,4 @@
-top_k	severity_eligible	leakage_eligible	severity_eligible_pct	leakage_eligible_pct	expected_hypergeom	expected_eligibility_adjusted
+top_k	severity_eligible	warning_sign_eligible	severity_eligible_pct	warning_sign_eligible_pct	expected_hypergeom	expected_eligibility_adjusted
 30	24	28	80.0	93.3	0.073	0.055
 50	35	47	70.0	94.0	0.203	0.134
 75	55	70	73.3	93.3	0.457	0.313

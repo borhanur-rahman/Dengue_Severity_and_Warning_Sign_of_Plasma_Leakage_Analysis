@@ -1,25 +1,64 @@
-PPI + hub-gene workflow (per axis)
-==================================
+PPI and candidate hub-gene workflow (per axis)
+================================================
 
-REPRODUCIBILITY RECORD: STRING min score = 0.700, cytoHubba method = MCC. Report these in the manuscript.
+PURPOSE
+-------
+Use the enriched genes exported by Step 07 to construct a STRING protein-protein interaction network for each axis, visualize the network in Cytoscape, and rank candidate hub genes using cytoHubba.
 
-1. STRING (https://string-db.org)
-   - Search > 'Multiple proteins'
-   - Paste the contents of <axis>_ppi_genes.txt
-   - Organism: Homo sapiens
-   - Minimum required interaction score: 0.700 (high confidence)
-   - Export > send network to Cytoscape (stringApp), or download 'network coordinates'
+REPRODUCIBILITY RECORD
+----------------------
+STRING minimum interaction score: 0.700
+Primary cytoHubba ranking method: MCC
+
+These parameters are read from config/paths.yaml and should be reported consistently in the manuscript.
+
+1. STRING
+--------
+Website: https://string-db.org
+
+For each axis:
+   - Choose 'Multiple proteins'.
+   - Paste the contents of <axis>_ppi_genes.txt.
+   - Select organism: Homo sapiens.
+   - Set minimum required interaction score to 0.700.
+   - Construct the interaction network.
+   - Export the STRING interaction network or transfer it directly to Cytoscape using stringApp when available.
+
+Important: record the STRING database/version and network retrieval date when performing the final analysis, because STRING is an externally maintained resource that may be updated over time.
 
 2. Cytoscape
-   - Load the STRING network (stringApp) for the axis
-   - File > Import > Table from file: <axis>_node_attributes.tsv (key column = gene)
+------------
+For each axis:
+   - Load the corresponding STRING interaction network.
+   - Import <axis>_node_attributes.tsv as a node table.
+   - Use the 'gene' column as the node-matching key where applicable.
+   - Confirm that node identifiers are correctly matched before performing hub analysis.
 
-3. cytoHubba (Apps > cytoHubba)
-   - Target network: the axis network
-   - Compute node scores by: MCC (recommended), also Degree and MNC
-   - Export the top 10 (or top 15) ranked nodes = HUB GENES for that axis
+3. cytoHubba
+------------
+Open Apps > cytoHubba and select the corresponding axis network.
 
-Report hubs per axis. Because the input genes come from enriched pathways,
-hubs will tend to be the central genes of each axis's dominant program
-(e.g. interferon hub for severity, chemokine/cytotoxic hub for leakage) -
-frame them as 'central genes of the axis programme', which is standard.
+Primary hub-ranking method: MCC
+
+Rank nodes using the configured primary method and export the highest-ranked nodes for downstream interpretation.
+
+If Degree or MNC rankings are also examined, treat them as secondary or sensitivity analyses rather than replacing the predefined primary ranking method.
+
+4. Reporting
+------------
+Report candidate hub genes separately for the severity and warning-sign axes.
+
+The final manuscript should report, at minimum:
+   - input gene-selection procedure
+   - STRING database/version if available
+   - network retrieval date
+   - organism
+   - minimum STRING interaction score
+   - number of input genes
+   - number of network nodes and edges
+   - primary cytoHubba ranking method
+   - number of top-ranked candidate hub genes reported
+
+Biological interpretation should be based on the observed enrichment and PPI results. Do not assign pathway-specific interpretations in advance of the observed network results.
+
+Hub genes identified computationally should be described as 'candidate hub genes' unless independently validated experimentally or by an additional external dataset.

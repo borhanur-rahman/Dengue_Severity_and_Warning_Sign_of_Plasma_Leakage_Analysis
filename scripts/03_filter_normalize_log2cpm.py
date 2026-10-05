@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
 """Step 03 — CPM filter + log2, each dataset independently.
 
-ONLY the low-expression filtering rule changed. Normalisation (CPM), the CPM
-threshold, the log2(CPM+1) transform, the zero-library guard and the per-dataset
-independence are all exactly as before.
+Low-expression filtering scales with each dataset's smallest condition group;
+normalisation (CPM), the CPM threshold, the log2(CPM+1) transform, the
+zero-library guard and per-dataset independence are unchanged.
 
-Why the rule changed
---------------------
+Rationale
+---------
 A fixed `min_samples = 5` means different things in the two cohorts: 5.7% of
-GSE178240 (87 samples) but 45% of GSE215835 (11 samples) — an eightfold
-difference in effective stringency that a reviewer will query. The new default
-scales the requirement with each dataset's smallest condition group, so the
-stringency is comparable across cohorts:
+GSE178240 (87 samples) but 45% of GSE215835 (11 samples). Scaling the
+requirement with each dataset's smallest condition group keeps the stringency
+comparable across cohorts:
 
     filter_mode: group_fraction   (default)
         CPM >= min_cpm in >= ceil(min_group_fraction x smallest group) samples
         GSE178240: smallest group 33  ->  >= 17 samples
         GSE215835: smallest group  5  ->  >=  3 samples
 
-    filter_mode: fixed            (your original behaviour, kept for comparison)
+    filter_mode: fixed            (fixed-sample alternative, kept for comparison)
         CPM >= min_cpm in >= min_samples samples
 
 Both rules are evaluated and printed every run so the impact is visible; only
@@ -133,7 +132,7 @@ def main():
         print(f"[filter] rule = max(floor {MIN_SAMPLES_FLOOR}, "
               f"{MIN_GROUP_FRACTION} x smallest condition group), CPM >= {MIN_CPM}")
     else:
-        print(f"[filter] rule = CPM >= {MIN_CPM} in >= {MIN_SAMPLES} samples [fixed]")
+        print(f"[filter] rule = CPM >= {MIN_CPM} in >= {MIN_SAMPLES} samples")
     a = process(counts_path("GSE178240"), logcpm_path("GSE178240"), "GSE178240")
     b = process(counts_path("GSE215835"), logcpm_path("GSE215835"), "GSE215835")
 

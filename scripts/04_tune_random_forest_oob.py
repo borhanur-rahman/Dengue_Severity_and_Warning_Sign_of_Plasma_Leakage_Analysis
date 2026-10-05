@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
-Step 03b — select n_estimators per axis by OUT-OF-BAG ERROR.
-
-READ ONLY. Prints a config block to paste; changes nothing on its own.
+Step 04 — select n_estimators per axis by OUT-OF-BAG ERROR.
 
 Selection rule
 --------------
@@ -24,7 +22,7 @@ Two things are done to make that rule trustworthy:
    meaningful.
 
 Output: a tuning table (rf_oob_tuning.tsv) and a 300 dpi figure
-(oob_error_vs_n_estimators.png/.pdf) showing OOB error against forest size for
+(oob_error_vs_forest_size.png/.pdf) showing OOB error against forest size for
 each axis, with the seed spread, the selected value, and a shaded band one OOB
 step wide above the minimum -- values inside that band cannot be distinguished
 given the resolution of the metric.
@@ -91,7 +89,7 @@ def discovery_samples(axis):
         return expr, s, np.array(y)
     meta = pd.read_csv(metadata_path(tag), sep="\t")
     meta["sample_id"] = meta["sample_id"].astype(str)
-    m = meta[meta["axis"].astype(str).str.lower() == "leakage"] if "axis" in meta.columns else meta
+    m = meta[meta["axis"].astype(str).str.lower() == "warning_sign"] if "axis" in meta.columns else meta
     if "cell_subtype" in m.columns:
         pb = m["cell_subtype"].astype(str).str.upper().str.contains("PBMC")
         if pb.any(): m = m[pb]
@@ -201,7 +199,6 @@ def make_figure(all_df, rec, pars=None, flat=None):
       - RGB, no transparency issues in EPS
       - No overall title / caption / figure number inside the figure
       - Exports: TIFF, EPS, PNG, JPEG, SVG, PDF
-      - Output files named Fig3.*
     """
 
     import numpy as np
@@ -281,7 +278,7 @@ def make_figure(all_df, rec, pars=None, flat=None):
         axis_upper = str(axis_name).upper()
         if axis_upper == "SEVERITY":
             return "Severity axis"
-        if axis_upper in ("LEAKAGE", "WARNING"):
+        if axis_upper in ("WARNING_SIGN", "WARNING"):
             return "Warning sign axis"
         return f"{axis_upper} axis"
 
@@ -471,7 +468,7 @@ def make_figure(all_df, rec, pars=None, flat=None):
         line_handles.append(line)
 
         axis_upper = str(axis).upper()
-        if axis_upper in ("LEAKAGE", "WARNING"):
+        if axis_upper in ("WARNING_SIGN", "WARNING"):
             line_labels.append("WARNING")
         else:
             line_labels.append("SEVERITY")
@@ -508,9 +505,9 @@ def make_figure(all_df, rec, pars=None, flat=None):
     )
 
     # ============================================================
-    # Save outputs (all PLOS-compatible formats) – named Fig3
+    # Save outputs (all PLOS-compatible formats) — content-based file name
     # ============================================================
-    out_base = QC_DIR / "Fig3"
+    out_base = QC_DIR / "oob_error_vs_forest_size"
 
     # TIFF – single layer, LZW compression (PLOS requirement)
     fig.savefig(
@@ -565,9 +562,11 @@ def make_figure(all_df, rec, pars=None, flat=None):
 
     for ext in ["tif", "eps", "png", "jpeg", "svg", "pdf"]:
         print(f"[figure saved] {out_base}.{ext}")
+
+
 def main():
     print("=" * 76)
-    print("STEP 03b — n_estimators by OUT-OF-BAG error (read only)")
+    print("STEP 04 — n_estimators by OUT-OF-BAG error")
     print("=" * 76)
     print(f"  grid: {GRID}")
     print(f"  rule: lowest mean OOB error over {N_SEEDS} seeds")
@@ -583,17 +582,16 @@ def main():
     make_figure(all_df, rec, pars, flat)
 
     print("\n" + "=" * 76)
-    print("PASTE THIS INTO config/v2_config.yaml UNDER  rf:")
+    print("n_estimators selected per axis (lowest mean OOB error):")
     print("=" * 76)
-    print("  n_estimators_by_axis:")
     for axis in AXES:
-        print(f"    {axis}: {rec[axis]}")
+        print(f"  {axis}: {rec[axis]}")
     for axis in AXES:
         if flat[axis]:
             print(f"  # {axis}: OOB was flat below its resolution; "
                   f"parsimonious alternative = {pars[axis]}")
     print(f"\n[SAVED] {QC_DIR / 'rf_oob_tuning.tsv'}")
-    print(f"\n[SAVED] -> {OUT}\n[DONE]")
+    print("[DONE]")
 
 if __name__ == "__main__":
     main()

@@ -18,18 +18,18 @@
     200
   ],
   "n_estimators_by_axis": {
-    "leakage": 500,
+    "warning_sign": 500,
     "severity": 300
   },
   "axes": [
     "severity",
-    "leakage"
+    "warning_sign"
   ],
   "n_estimators_resolved": {
     "severity": 300,
-    "leakage": 500
+    "warning_sign": 500
   },
   "_run_id": "results",
   "_step": "rf",
-  "_written_at": "2026-10-04T16:02:55"
+  "_written_at": "2026-10-05T08:43:05"
 }

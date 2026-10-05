@@ -5,10 +5,10 @@
   "top_n": 50,
   "overlap_universe": "intersection",
   "axes": [
-    "leakage",
+    "warning_sign",
     "severity"
   ],
   "_run_id": "results",
   "_step": "enrichment",
-  "_written_at": "2026-09-29T11:00:53"
+  "_written_at": "2026-10-05T09:44:19"
 }

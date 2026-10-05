@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Step 02 — Ensembl->symbol mapping, drop pseudogenes, symbol cleanup.
 
-Your original script, with small fixes only:
-  * mygene mapping cached to disk with query date (reproducible re-runs);
-  * unmapped Ensembl IDs saved (you were dropping ~20% silently);
-  * symbol-cleanup regexes corrected so RPS6KA1/KB1 (S6 kinases), MTOR/MTHFR,
-    HBEGF/HBP1 are NOT removed — MT- exact, RP[LS]\\d exact, explicit globins.
-Mapping choice, pseudogene rule, and the removal categories are unchanged.
+  * mygene mapping is cached to disk with the query date, so re-runs stay
+    reproducible;
+  * unmapped Ensembl IDs are saved to a separate file instead of dropped;
+  * symbol-cleanup regexes spare the S6 kinases RPS6KA1/KB1 and genes such as
+    MTOR/MTHFR/HBEGF/HBP1 — MT- is matched exactly, globins explicitly.
+The mapping choice, the pseudogene rule, and the removal categories are
+unchanged.
 """
 from pathlib import Path
 import datetime as dt
@@ -34,7 +35,7 @@ MAP_CACHE = PROC_DIR / "ensembl_symbol_map.tsv.gz"
 
 mg = mygene.MyGeneInfo()
 
-# --- corrected symbol-cleanup (was: prefix RPL/RPS/HB caught kinases & HBEGF) ---
+# --- symbol cleanup: MT-, RP[LS]\d, MRP[LS]\d patterns and globins; RPS6K kinases spared ---
 _sc = CFG["preprocessing"]["symbol_cleanup"]
 MITO_RE = re.compile(_sc["mito_regex"])
 RIBO_RE = re.compile(_sc["ribosomal_regex"])

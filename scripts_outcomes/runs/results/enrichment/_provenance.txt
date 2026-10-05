@@ -1,6 +1,11 @@
-gseapy: 1.2.1
-GO: GO_Biological_Process_2021
-KEGG: KEGG_2021_Human
-padj: 0.05
+gseapy_version: 1.2.1
+GO_library: GO_Biological_Process_2021
+KEGG_library: KEGG_2021_Human
+adjusted_p_threshold: 0.05
 top_n: 50
-Cite these exact library names.
+axes: warning_sign, severity
+
+The gene signatures analyzed here are fixed outputs from Step 05.
+No feature selection or RF model fitting is performed in Step 06.
+
+Note: Enrichr is an online resource. The exact library names and GSEApy version are recorded here, but remote library contents may change independently over time.

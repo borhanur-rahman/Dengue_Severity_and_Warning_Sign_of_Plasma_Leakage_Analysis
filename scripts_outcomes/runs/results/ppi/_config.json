@@ -1,11 +1,11 @@
 {
   "axes": [
-    "leakage",
+    "warning_sign",
     "severity"
   ],
   "string_min_score": 0.7,
   "cytohubba_method": "MCC",
   "_run_id": "results",
   "_step": "ppi",
-  "_written_at": "2026-09-29T11:01:19"
+  "_written_at": "2026-10-05T09:46:30"
 }

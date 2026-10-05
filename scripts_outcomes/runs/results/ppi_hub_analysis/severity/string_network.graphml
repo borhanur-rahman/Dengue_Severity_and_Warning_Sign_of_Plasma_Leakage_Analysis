@@ -32,7 +32,7 @@
       <data key="d1">1</data>
       <data key="d2">1</data>
       <data key="d3">1</data>
-      <data key="d4">0.837</data>
+      <data key="d4">0.745</data>
       <data key="d5">False</data>
       <data key="d6">EGR1</data>
     </node>
@@ -41,7 +41,7 @@
       <data key="d1">120</data>
       <data key="d2">5</data>
       <data key="d3">5</data>
-      <data key="d4">4.586</data>
+      <data key="d4">4.563000000000001</data>
       <data key="d5">False</data>
       <data key="d6">EIF2AK2</data>
     </node>
@@ -50,7 +50,7 @@
       <data key="d1">120</data>
       <data key="d2">5</data>
       <data key="d3">5</data>
-      <data key="d4">4.614</data>
+      <data key="d4">4.505</data>
       <data key="d5">False</data>
       <data key="d6">IFI44L</data>
     </node>
@@ -59,7 +59,7 @@
       <data key="d1">120</data>
       <data key="d2">5</data>
       <data key="d3">5</data>
-      <data key="d4">4.689</data>
+      <data key="d4">4.6370000000000005</data>
       <data key="d5">False</data>
       <data key="d6">IFIH1</data>
     </node>
@@ -68,7 +68,7 @@
       <data key="d1">120</data>
       <data key="d2">5</data>
       <data key="d3">5</data>
-      <data key="d4">4.807</data>
+      <data key="d4">4.714</data>
       <data key="d5">False</data>
       <data key="d6">IFIT3</data>
     </node>
@@ -86,7 +86,7 @@
       <data key="d1">120</data>
       <data key="d2">5</data>
       <data key="d3">5</data>
-      <data key="d4">4.461</data>
+      <data key="d4">4.462</data>
       <data key="d5">False</data>
       <data key="d6">PARP9</data>
     </node>
@@ -104,57 +104,57 @@
       <data key="d1">121</data>
       <data key="d2">6</data>
       <data key="d3">5</data>
-      <data key="d4">5.577999999999999</data>
+      <data key="d4">5.47</data>
       <data key="d5">False</data>
       <data key="d6">STAT1</data>
     </node>
     <edge source="EGR1" target="STAT1">
-      <data key="d7">0.837</data>
+      <data key="d7">0.745</data>
     </edge>
     <edge source="EIF2AK2" target="STAT1">
-      <data key="d7">0.98</data>
-    </edge>
-    <edge source="EIF2AK2" target="IFIH1">
-      <data key="d7">0.962</data>
+      <data key="d7">0.995</data>
     </edge>
     <edge source="EIF2AK2" target="IFIT3">
-      <data key="d7">0.943</data>
+      <data key="d7">0.934</data>
+    </edge>
+    <edge source="EIF2AK2" target="IFIH1">
+      <data key="d7">0.93</data>
     </edge>
     <edge source="EIF2AK2" target="IFI44L">
-      <data key="d7">0.927</data>
+      <data key="d7">0.899</data>
     </edge>
     <edge source="EIF2AK2" target="PARP9">
-      <data key="d7">0.774</data>
+      <data key="d7">0.805</data>
     </edge>
     <edge source="IFI44L" target="IFIT3">
-      <data key="d7">0.982</data>
-    </edge>
-    <edge source="IFI44L" target="PARP9">
-      <data key="d7">0.931</data>
+      <data key="d7">0.976</data>
     </edge>
     <edge source="IFI44L" target="IFIH1">
-      <data key="d7">0.904</data>
+      <data key="d7">0.917</data>
     </edge>
-    <edge source="IFI44L" target="STAT1">
+    <edge source="IFI44L" target="PARP9">
       <data key="d7">0.87</data>
     </edge>
+    <edge source="IFI44L" target="STAT1">
+      <data key="d7">0.843</data>
+    </edge>
     <edge source="IFIH1" target="IFIT3">
-      <data key="d7">0.972</data>
+      <data key="d7">0.944</data>
     </edge>
     <edge source="IFIH1" target="STAT1">
-      <data key="d7">0.963</data>
+      <data key="d7">0.93</data>
     </edge>
     <edge source="IFIH1" target="PARP9">
-      <data key="d7">0.888</data>
+      <data key="d7">0.916</data>
     </edge>
     <edge source="IFIT3" target="STAT1">
-      <data key="d7">0.985</data>
+      <data key="d7">0.973</data>
     </edge>
     <edge source="IFIT3" target="PARP9">
-      <data key="d7">0.925</data>
+      <data key="d7">0.887</data>
     </edge>
     <edge source="PARP9" target="STAT1">
-      <data key="d7">0.943</data>
+      <data key="d7">0.984</data>
     </edge>
   </graph>
 </graphml>

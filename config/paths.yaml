@@ -29,7 +29,7 @@ axes:
     platform_aware: false
     discovery_platform: null
     validation_platform: null
-  leakage:
+  warning_sign:
     dataset: GSE178240
     case: D+W
     control: D-W
@@ -93,7 +93,7 @@ rf:
   - 150
   - 200
   n_estimators_by_axis:
-    leakage: 500
+    warning_sign: 500
     severity: 300
 enrichment:
   go_library: GO_Biological_Process_2021
@@ -103,7 +103,7 @@ enrichment:
   overlap_universe: intersection
 ppi:
   axes:
-  - leakage
+  - warning_sign
   - severity
   string_min_score: 0.7
   cytohubba_method: MCC

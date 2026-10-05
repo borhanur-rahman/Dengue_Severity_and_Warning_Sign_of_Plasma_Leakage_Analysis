@@ -1,23 +1,24 @@
 #!/usr/bin/env python3
-"""Step 04 — RF top-50 signature per axis + cross-axis overlap.
+"""Step 05 — RF top-50 signature per axis + cross-axis overlap.
 
-Produces the top-50 gene lists that steps 05/06 consume, written to
-v2/runs/<RUN_ID>/rf/{axis}_top50_features.tsv  (and {axis}_top50_genes.tsv).
+Produces the top-50 gene lists consumed by steps 06/07, written to
+scripts_outcomes/runs/<RUN_ID>/rf/{axis}_top50_features.tsv (and
+{axis}_top50_genes.tsv).
 
-METHOD == your original top50_overlap script, UNCHANGED:
+Method:
   1. top-2000 HVGs (variance rank + MAD rank) on each axis's own samples
   2. RF rank = Gini (n_seed_fits) + permutation importance, ranks summed
   3. take TOP-50, REFIT RF on those 50, CV (LOOCV if n<20 else RepStrat5x10)
-  4. leakage restricted to NovaSeq6000 (discovery)
+  4. warning-sign axis restricted to NovaSeq6000 (discovery)
   5. cross-axis common genes with a hypergeometric p
 
-REVIEWER-BLOCKING FIXES (do NOT change the discovery gene lists; written as
-SEPARATE supplementary files so reviewers get an honest estimate):
+Bias controls (supplementary outputs; the discovery gene lists are
+unchanged):
   * external validation: train top-50 on NovaSeq, test once on held-out HiSeq
-    -> {leakage}_external_validation.tsv   [REVIEWER_DEFENCE 1.1]
+    -> {warning_sign}_external_validation.tsv
   * nested CV: HVG + ranking + top-50 chosen INSIDE each fold
-    -> {axis}_nested_cv.tsv                 [REVIEWER_DEFENCE 1.1]
-  * overlap universe = INTERSECTION of the two datasets  [REVIEWER_DEFENCE 2.1]
+    -> {axis}_nested_cv.tsv
+  * overlap universe = INTERSECTION of the two datasets
   * global seeding for identical gene lists
 """
 from pathlib import Path
@@ -38,7 +39,7 @@ from paths import (CFG, seed_everything, make_run_id, run_dir, set_latest,
 seed_everything()
 
 N_HVG = int(CFG["rf"]["hvg_n"])
-TOPN = int(CFG["rf"]["top_n"])          # PRIMARY K (steps 05/06 read this)
+TOPN = int(CFG["rf"]["top_n"])          # PRIMARY K (steps 06/07 read this)
 K_GRID = sorted(set(int(k) for k in CFG["rf"].get("k_grid", [TOPN])) | {TOPN})
 N_ESTIMATORS = int(CFG["rf"]["n_estimators"])          # fallback
 N_EST_BY_AXIS = CFG["rf"].get("n_estimators_by_axis", {}) or {}
@@ -90,9 +91,9 @@ def get_samples(axis):
             if "_DHF" in cu: s.append(c); y.append(1)
             elif "_DF" in cu: s.append(c); y.append(0)
         return expr, s, np.array(y), [], np.array([])
-    # leakage
+    # warning signs
     meta = pd.read_csv(metadata_path(tag), sep="\t"); meta["sample_id"] = meta["sample_id"].astype(str)
-    m = meta[meta["axis"].astype(str).str.lower() == "leakage"] if "axis" in meta.columns else meta
+    m = meta[meta["axis"].astype(str).str.lower() == "warning_sign"] if "axis" in meta.columns else meta
     if "cell_subtype" in m.columns:
         pb = m["cell_subtype"].astype(str).str.upper().str.contains("PBMC")
         if pb.any(): m = m[pb]
@@ -112,7 +113,7 @@ def get_samples(axis):
 
 def make_rf(seed):
     """Uses ACTIVE_N_EST, which axis_signature sets to the per-axis value from
-    rf.n_estimators_by_axis (chosen by ranking convergence in step 03b)."""
+    rf.n_estimators_by_axis (chosen by out-of-bag-error tuning in step 04)."""
     return RandomForestClassifier(n_estimators=ACTIVE_N_EST, max_features="sqrt",
                                   class_weight="balanced_subsample", n_jobs=-1, random_state=seed)
 
@@ -163,10 +164,10 @@ def external_validation(axis, expr, disc_s, disc_y, val_s, val_y, ranked):
                balanced_accuracy=balanced_accuracy_score(val_y, pred),
                auc=roc_auc_score(val_y, prob), mcc=matthews_corrcoef(val_y, pred),
                majority=float(max(val_y.mean(), 1 - val_y.mean())))
-    print(f"[{axis}] EXTERNAL {res['heldout_platform']} (n={len(val_y)}, untouched): "
+    print(f"[{axis}] EXTERNAL {res['heldout_platform']} (n={len(val_y)}, untouched hold-out; "
+          f"nothing was fitted to this platform): "
           f"bal_acc={res['balanced_accuracy']:.3f} auc={res['auc']:.3f} "
           f"(majority {res['majority']:.3f})")
-    print("       ^ nothing was fitted to this platform — strongest number here.")
     return res
 
 
@@ -218,7 +219,7 @@ def axis_signature(axis, expr, disc_s, disc_y, val_s, val_y):
     print(f"[{axis}] {len(genes)} HVGs x {len(disc_s)} samples "
           f"(case {int(disc_y.sum())}/ctrl {int((disc_y==0).sum())}) "
           f"| n_estimators = {ACTIVE_N_EST}"
-          + ("" if axis in N_EST_BY_AXIS else "  [fallback — run 3b_tune_rf.py]"))
+          + ("" if axis in N_EST_BY_AXIS else "  [fallback — run 04_tune_random_forest_oob.py]"))
     order, gini, perm = rank_by_rf(X, disc_y)
     ranked = [genes[i] for i in order]
     top50 = ranked[:TOPN]
@@ -267,7 +268,7 @@ def make_figure(sweeps, grid, a1, a2):
 
     Display names:
       - SEVERITY  → "Severity"
-      - LEAKAGE   → "Warning sign"
+      - WARNING_SIGN → "Warning sign"
 
     Each figure is saved in: PNG, JPEG, SVG, PDF, TIFF, EPS
     All files follow PLOS One figure rules (300 dpi, correct dimensions,
@@ -284,13 +285,13 @@ def make_figure(sweeps, grid, a1, a2):
         return
 
     # ------------------------------------------------------------------
-    # Display-name mapping (Leakage → Warning sign)
+    # Display-name mapping (warning_sign → Warning sign)
     # ------------------------------------------------------------------
     def display_name(axis):
         axis_upper = str(axis).upper()
         if axis_upper == "SEVERITY":
             return "Severity"
-        if axis_upper in ("LEAKAGE", "WARNING"):
+        if axis_upper in ("WARNING_SIGN", "WARNING"):
             return "Warning sign"
         return str(axis)
 
@@ -343,11 +344,11 @@ def make_figure(sweeps, grid, a1, a2):
             print(f"    saved {path.name}")
 
     # ------------------------------------------------------------------
-    # FIGURE 1 – Top-K vs performance (both axes)
+    # FIG: signature size vs classification performance (both axes)
     # ------------------------------------------------------------------
     # Target size ≈ 1-column or 1.5-column (PLOS: 789–2250 px @ 300 dpi)
     # 6.5 in wide × 4.5 in high → 1950 × 1350 px @ 300 dpi (safe)
-    fig1, ax = plt.subplots(1, 1, figsize=(6.5, 4.5))
+    fig_perf, ax = plt.subplots(1, 1, figsize=(6.5, 4.5))
 
     for axis, sw in sweeps.items():
         sw = sw.sort_values("top_k")
@@ -377,14 +378,14 @@ def make_figure(sweeps, grid, a1, a2):
     ax.set_axisbelow(True)
 
     # Remove excess whitespace while keeping a small border (PLOS tip)
-    fig1.tight_layout(pad=0.4)
-    _save(fig1, "Fig1_topk_vs_performance")
-    plt.close(fig1)
+    fig_perf.tight_layout(pad=0.4)
+    _save(fig_perf, "signature_size_vs_classification_performance")
+    plt.close(fig_perf)
 
     # ------------------------------------------------------------------
-    # FIGURE 2 – Overlap (observed common genes vs chance)
+    # FIG: cross-axis overlap (observed common genes vs chance)
     # ------------------------------------------------------------------
-    fig2, ax = plt.subplots(1, 1, figsize=(6.5, 4.5))
+    fig_ov, ax = plt.subplots(1, 1, figsize=(6.5, 4.5))
 
     x_labels = [str(k) for k in grid["top_k"]]
     x_pos = np.arange(len(x_labels))
@@ -400,15 +401,14 @@ def make_figure(sweeps, grid, a1, a2):
     ax.set_xticklabels(x_labels)
     ax.set_xlabel("Top-K")
     ax.set_ylabel("Common genes")
-    # Exact title requested
     ax.set_title(f"{display_name(a1)} top-K vs {display_name(a2)} top-K overlap")
     ax.legend(loc="best", frameon=True, fancybox=False, edgecolor="0.7")
     ax.grid(alpha=0.25, axis="y")
     ax.set_axisbelow(True)
 
-    fig2.tight_layout(pad=0.4)
-    _save(fig2, "Fig2_topk_overlap")
-    plt.close(fig2)
+    fig_ov.tight_layout(pad=0.4)
+    _save(fig_ov, "cross_axis_overlap_vs_signature_size")
+    plt.close(fig_ov)
 
     print(f"\n  [figures] written to {OUT}/")
     print("  Formats generated for each figure: png, jpeg, svg, pdf, tiff, eps")
@@ -421,7 +421,7 @@ def main():
         "axes": AXES, "n_estimators_resolved": {
             a: int(N_EST_BY_AXIS.get(a, N_ESTIMATORS)) for a in AXES}})
     set_latest(RUN_ID)
-    print("=" * 70 + f"\nSTEP 04 - RF top-{TOPN} signature   run={RUN_ID}\n" + "=" * 70)
+    print("=" * 70 + f"\nSTEP 05 - RF top-{TOPN} signature   run={RUN_ID}\n" + "=" * 70)
     print(f"  output: {OUT}")
 
     sets, perfs, univ, rankings, sweeps = {}, {}, {}, {}, {}

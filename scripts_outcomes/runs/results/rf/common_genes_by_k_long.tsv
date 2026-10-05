@@ -1,4 +1,4 @@
-top_k	common_rank	gene	severity_rank	leakage_rank
+top_k	common_rank	gene	severity_rank	warning_sign_rank
 30	1	EGR1	27	30
 50	1	EGR1	27	30
 75	1	EGR1	27	30

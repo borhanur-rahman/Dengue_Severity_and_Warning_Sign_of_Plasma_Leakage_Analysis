@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 """Step 01 — build sample metadata for both axes.
 
-Your original script, with small robustness fixes only:
-  * characteristics parsed as key:value (handles 'Cryopreserved PBMC' in a
-    constant 'tissue' field, and any field-order differences between the two
-    GSE178240 series matrices) — prevents the 0-PBMC-selected failure;
-  * subject count reported (the independence check: 87 PBMC = 87 subjects);
-  * title-uniqueness and merge-cardinality assertions.
-No condition labels, platform assignments, or sample selection logic changed.
+Characteristics are parsed as key:value pairs, which handles the constant
+'Cryopreserved PBMC' tissue field and any field-order differences between
+the two GSE178240 series matrices. Subject count is reported (87 PBMC = 87
+subjects, one each), and title uniqueness and merge cardinality are asserted.
 """
 from pathlib import Path
 import gzip
@@ -24,7 +21,7 @@ ensure_data_dirs()
 
 gse178240_counts = Path(CFG["raw_data"]["gse178240_counts"])
 gse215835_counts = Path(CFG["raw_data"]["gse215835_counts"])
-SUBTYPE = CFG["axes"]["leakage"]["cell_subtype"]
+SUBTYPE = CFG["axes"]["warning_sign"]["cell_subtype"]
 
 PLATFORM_NAME = CFG["platform_names"]
 from paths import SERIES_DIR
@@ -101,7 +98,7 @@ def warning_label(t):
 
 
 def build_gse178240():
-    print("\n" + "=" * 70 + f"\n[GSE178240] leakage metadata — subtype={SUBTYPE}\n" + "=" * 70)
+    print("\n" + "=" * 70 + f"\n[GSE178240] warning-sign metadata — subtype={SUBTYPE}\n" + "=" * 70)
     header = pd.read_csv(gse178240_counts, sep="\t", nrows=1).columns.tolist()
     all_cols = header[1:]
     print(f"[GSE178240] total count columns: {len(all_cols)}")
@@ -154,7 +151,7 @@ def build_gse178240():
     print(f"[GSE178240] unique subjects: {df['subject'].nunique()} | samples: {len(df)}")
 
     df["dataset"] = "GSE178240"
-    df["axis"] = "leakage"
+    df["axis"] = "warning_sign"
     df["condition"] = df["true_label"]
     df["case_control_role"] = df["condition"].map({"D+W": "case", "D-W": "control"})
     df = df[["sample_id", "gsm", "subject", "dataset", "axis", "condition",
