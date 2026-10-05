@@ -3,7 +3,7 @@
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/borhanur-rahman/Dengue_Sevirity_and_Warning_Sign_of_Plasma_Leakage_Analysis.git
+git clone https://github.com/borhanur-rahman/Dengue_Severity_and_Warning_Sign_of_Plasma_Leakage_Analysis.git
 ```
 
 ```bash
