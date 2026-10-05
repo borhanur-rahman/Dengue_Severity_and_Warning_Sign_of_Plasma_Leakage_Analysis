@@ -1,2 +1,2 @@
-axis	scheme	balanced_accuracy	auc	mcc
-severity	nested_5x2	0.5333333333333333	0.7333333333333333	0.06900655593423542
+axis	scheme	ranking	balanced_accuracy	auc	mcc
+severity	nested_5x2	gini+permutation	0.5333333333333333	0.7333333333333333	0.06900655593423542

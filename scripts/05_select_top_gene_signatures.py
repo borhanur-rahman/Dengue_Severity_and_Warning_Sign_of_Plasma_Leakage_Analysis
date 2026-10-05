@@ -174,24 +174,35 @@ def nested_cv(axis, expr, samples, y):
     if len(np.unique(y)) < 2 or len(y) < 8:
         print(f"[{axis}] nested CV skipped (n={len(y)} too small)")
         return None
-    counts = np.bincount(y); ns = max(2, min(CFG["rf"]["nested_outer_splits"], int(counts[counts>0].min())))
-    outer = RepeatedStratifiedKFold(n_splits=ns, n_repeats=CFG["rf"]["nested_outer_repeats"], random_state=RS)
+
+    # same ranking as discovery: Gini (avg over seed fits) + permutation importance,
+    # ranks summed.  Set rf.nested_permutation_importance: false in config to fall
+    # back to Gini-only if the folds get too slow.
+    DO_PERM = bool(CFG["rf"].get("nested_permutation_importance", True))
+
+    counts = np.bincount(y)
+    ns = max(2, min(CFG["rf"]["nested_outer_splits"], int(counts[counts > 0].min())))
+    outer = RepeatedStratifiedKFold(n_splits=ns, n_repeats=CFG["rf"]["nested_outer_repeats"],
+                                    random_state=RS)
     idx = np.arange(len(samples))
     prob = np.zeros(len(samples)); cnt = np.zeros(len(samples))
     for tr, te in outer.split(idx, y):
         tr_s = [samples[i] for i in tr]; te_s = [samples[i] for i in te]
-        genes = top_hvg(expr, tr_s, N_HVG)                      # train only
+        genes = top_hvg(expr, tr_s, N_HVG)                       # train only
         Xtr = expr.loc[genes, tr_s].T.values; Xte = expr.loc[genes, te_s].T.values
-        order, _, _ = rank_by_rf(Xtr, y[tr], seeds=5, perm=False)   # Gini-only in-fold for speed
+        # <<< CHANGE: permutation importance now mirrors the discovery ranking
+        order, _, _ = rank_by_rf(Xtr, y[tr],
+                                 seeds=RANK_SEED_FITS, perm=DO_PERM)
         g = order[:TOPN]
         rf = make_rf(RS).fit(Xtr[:, g], y[tr])
         prob[te] += rf.predict_proba(Xte[:, g])[:, 1]; cnt[te] += 1
     oof = prob / np.maximum(cnt, 1); pred = (oof >= 0.5).astype(int)
     res = dict(axis=axis, scheme=f"nested_{ns}x{CFG['rf']['nested_outer_repeats']}",
+               ranking="gini+permutation" if DO_PERM else "gini_only",
                balanced_accuracy=balanced_accuracy_score(y, pred),
-               auc=roc_auc_score(y, oof) if len(np.unique(y))>1 else np.nan,
+               auc=roc_auc_score(y, oof) if len(np.unique(y)) > 1 else np.nan,
                mcc=matthews_corrcoef(y, pred))
-    print(f"[{axis}] NESTED CV (selection inside folds): "
+    print(f"[{axis}] NESTED CV (selection inside folds, {res['ranking']}): "
           f"bal_acc={res['balanced_accuracy']:.3f} auc={res['auc']:.3f}")
     return res
 
@@ -249,50 +260,159 @@ def axis_signature(axis, expr, disc_s, disc_y, val_s, val_y):
 
 
 def make_figure(sweeps, grid, a1, a2):
-    """Top-K vs accuracy for BOTH axes in one figure (+ overlap panel)."""
+    """
+    Generate TWO separate PLOS One-compliant figures:
+      1. Top-K vs performance (balanced accuracy + AUC)
+      2. Top-K overlap (observed vs expected by chance)
+
+    Display names:
+      - SEVERITY  → "Severity"
+      - LEAKAGE   → "Warning sign"
+
+    Each figure is saved in: PNG, JPEG, SVG, PDF, TIFF, EPS
+    All files follow PLOS One figure rules (300 dpi, correct dimensions,
+    Arial/Times fonts 8-12 pt, RGB, flattened TIFF with LZW where possible).
+    """
     try:
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
+        from matplotlib import rcParams
+        import numpy as np
     except Exception as exc:  # noqa: BLE001
         print(f"  [skip figure] matplotlib unavailable: {exc}")
         return
 
+    # ------------------------------------------------------------------
+    # Display-name mapping (Leakage → Warning sign)
+    # ------------------------------------------------------------------
+    def display_name(axis):
+        axis_upper = str(axis).upper()
+        if axis_upper == "SEVERITY":
+            return "Severity"
+        if axis_upper in ("LEAKAGE", "WARNING"):
+            return "Warning sign"
+        return str(axis)
+
+    # ------------------------------------------------------------------
+    # PLOS One-compliant global settings
+    # ------------------------------------------------------------------
+    rcParams.update({
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
+        "font.size": 9,                 # 8-12 pt required
+        "axes.labelsize": 10,
+        "axes.titlesize": 11,
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8,
+        "legend.fontsize": 8,
+        "axes.linewidth": 0.8,
+        "lines.linewidth": 1.5,
+        "pdf.fonttype": 42,             # TrueType (editable text in PDF/EPS)
+        "ps.fonttype": 42,
+        "svg.fonttype": "none",         # keep text as text in SVG
+    })
+
     colours = {a1: "#2b6cb0", a2: "#c05621"}
-    fig, ax = plt.subplots(1, 2, figsize=(13, 4.8))
+    formats = ("png", "jpeg", "svg", "pdf", "tiff", "eps")
+
+    # Helper: save one figure in all requested formats with PLOS settings
+    def _save(fig, stem):
+        for ext in formats:
+            path = OUT / f"{stem}.{ext}"
+            kwargs = {"dpi": 300, "bbox_inches": "tight", "pad_inches": 0.05}
+
+            if ext == "tiff":
+                # Prefer LZW compression (PLOS requirement)
+                kwargs["pil_kwargs"] = {"compression": "tiff_lzw"}
+            elif ext == "jpeg":
+                kwargs["pil_kwargs"] = {"quality": 95}
+            elif ext in ("pdf", "eps", "svg"):
+                # Vector formats – no dpi needed but keep for consistency
+                pass
+
+            try:
+                fig.savefig(path, **kwargs)
+            except Exception as e:
+                # Fallback for older matplotlib / missing backends
+                print(f"    [warn] could not save {path.name}: {e}")
+                # Try without pil_kwargs
+                kwargs.pop("pil_kwargs", None)
+                fig.savefig(path, **kwargs)
+
+            print(f"    saved {path.name}")
+
+    # ------------------------------------------------------------------
+    # FIGURE 1 – Top-K vs performance (both axes)
+    # ------------------------------------------------------------------
+    # Target size ≈ 1-column or 1.5-column (PLOS: 789–2250 px @ 300 dpi)
+    # 6.5 in wide × 4.5 in high → 1950 × 1350 px @ 300 dpi (safe)
+    fig1, ax = plt.subplots(1, 1, figsize=(6.5, 4.5))
 
     for axis, sw in sweeps.items():
         sw = sw.sort_values("top_k")
-        ax[0].plot(sw["top_k"], sw["balanced_accuracy"], marker="o", lw=2,
-                   color=colours.get(axis), label=f"{axis} — balanced accuracy")
-        ax[0].plot(sw["top_k"], sw["auc"], marker="s", ls="--", lw=1.6, alpha=0.75,
-                   color=colours.get(axis), label=f"{axis} — AUC")
-    ax[0].axvline(TOPN, color="grey", ls=":", lw=1.5)
-    ax[0].annotate(f"primary K={TOPN}", xy=(TOPN, ax[0].get_ylim()[0]),
-                   xytext=(4, 6), textcoords="offset points", fontsize=8, color="grey")
-    ax[0].axhline(0.5, color="black", ls=":", lw=1, alpha=0.5)
-    ax[0].set_xlabel("Top-K RF genes")
-    ax[0].set_ylabel("Cross-validated performance")
-    ax[0].set_title("Top-K vs performance (both axes)")
-    ax[0].set_xticks(sorted(sweeps[a1]["top_k"]))
-    ax[0].legend(fontsize=8)
-    ax[0].grid(alpha=0.25)
+        name = display_name(axis)
+        ax.plot(sw["top_k"], sw["balanced_accuracy"],
+                marker="o", lw=2, color=colours.get(axis),
+                label=f"{name} — balanced accuracy")
+        ax.plot(sw["top_k"], sw["auc"],
+                marker="s", ls="--", lw=1.6, alpha=0.8,
+                color=colours.get(axis),
+                label=f"{name} — AUC")
 
-    ax[1].bar([str(k) for k in grid["top_k"]], grid["n_common"], color="#2b6cb0",
-              label="observed common genes")
-    ax[1].plot([str(k) for k in grid["top_k"]], grid["expected_by_chance"],
-               color="crimson", marker="o", lw=1.8, label="expected by chance")
-    ax[1].set_xlabel("Top-K")
-    ax[1].set_ylabel("Common genes")
-    ax[1].set_title(f"{a1} top-K  vs  {a2} top-K overlap")
-    ax[1].legend(fontsize=8)
-    ax[1].grid(alpha=0.25, axis="y")
+    ax.axvline(TOPN, color="grey", ls=":", lw=1.4)
+    ylim = ax.get_ylim()
+    ax.annotate(f"primary K={TOPN}",
+                xy=(TOPN, ylim[0]),
+                xytext=(5, 8), textcoords="offset points",
+                fontsize=8, color="grey")
 
-    fig.tight_layout()
-    for ext in ("png", "pdf"):
-        fig.savefig(OUT / f"topk_vs_accuracy.{ext}", dpi=300)
-    plt.close(fig)
-    print(f"\n  [figure] {OUT}/topk_vs_accuracy.png (+ .pdf, 300 dpi)")
+    ax.axhline(0.5, color="black", ls=":", lw=1, alpha=0.5)
+    ax.set_xlabel("Top-K RF genes")
+    ax.set_ylabel("Cross-validated performance")
+    ax.set_title("Top-K vs performance (both axes)")
+    ax.set_xticks(sorted(sweeps[a1]["top_k"]))
+    ax.legend(loc="best", frameon=True, fancybox=False, edgecolor="0.7")
+    ax.grid(alpha=0.25)
+    ax.set_axisbelow(True)
+
+    # Remove excess whitespace while keeping a small border (PLOS tip)
+    fig1.tight_layout(pad=0.4)
+    _save(fig1, "Fig1_topk_vs_performance")
+    plt.close(fig1)
+
+    # ------------------------------------------------------------------
+    # FIGURE 2 – Overlap (observed common genes vs chance)
+    # ------------------------------------------------------------------
+    fig2, ax = plt.subplots(1, 1, figsize=(6.5, 4.5))
+
+    x_labels = [str(k) for k in grid["top_k"]]
+    x_pos = np.arange(len(x_labels))
+
+    ax.bar(x_pos, grid["n_common"],
+           color="#2b6cb0", width=0.6,
+           label="observed common genes", zorder=3)
+    ax.plot(x_pos, grid["expected_by_chance"],
+            color="crimson", marker="o", lw=1.8,
+            label="expected by chance", zorder=4)
+
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(x_labels)
+    ax.set_xlabel("Top-K")
+    ax.set_ylabel("Common genes")
+    # Exact title requested
+    ax.set_title(f"{display_name(a1)} top-K vs {display_name(a2)} top-K overlap")
+    ax.legend(loc="best", frameon=True, fancybox=False, edgecolor="0.7")
+    ax.grid(alpha=0.25, axis="y")
+    ax.set_axisbelow(True)
+
+    fig2.tight_layout(pad=0.4)
+    _save(fig2, "Fig2_topk_overlap")
+    plt.close(fig2)
+
+    print(f"\n  [figures] written to {OUT}/")
+    print("  Formats generated for each figure: png, jpeg, svg, pdf, tiff, eps")
+    print("  All files are 300 dpi, RGB, Arial/Helvetica 8-12 pt")
 
 
 def main():
@@ -349,12 +469,13 @@ def main():
         com = sorted(s1 & s2, key=lambda g: (rankings[a1].index(g) + rankings[a2].index(g), g))
         exp_c = K * K / M_univ if M_univ else float("nan")
         p_k = hypergeom.sf(len(com) - 1, M_univ, K, K) if com and M_univ else 1.0
+        jaccard = len(com) / len(s1 | s2) if (s1 | s2) else float("nan")
         b1 = sweeps[a1].set_index("top_k").loc[K] if K in set(sweeps[a1]["top_k"]) else None
         b2 = sweeps[a2].set_index("top_k").loc[K] if K in set(sweeps[a2]["top_k"]) else None
         grid_rows.append({
             "top_k": K, "n_common": len(com),
             "overlap_percent": 100.0 * len(com) / K,
-            "jaccard": len(com) / len(s1 | s2) if (s1 | s2) else float("nan"),
+            "jaccard": jaccard,
             "expected_by_chance": round(exp_c, 3),
             "fold_enrichment": (len(com) / exp_c) if exp_c else float("nan"),
             "hypergeometric_p": p_k,
@@ -370,7 +491,8 @@ def main():
         pd.DataFrame([r for r in grid_genes if r["top_k"] == K]).to_csv(
             OUT / f"common_top{K}_genes.tsv", sep="\t", index=False)
         print(f"  top-{K:<4d} common={len(com):<3d} expected={exp_c:5.2f} "
-              f"fold={(len(com)/exp_c if exp_c else float('nan')):5.2f}x p={p_k:.3g}"
+              f"fold={(len(com)/exp_c if exp_c else float('nan')):5.2f}x "
+              f"jaccard={jaccard:.3f} p={p_k:.3g}"
               + (f"  [{', '.join(com[:8])}{' ...' if len(com) > 8 else ''}]" if com else ""))
 
     grid = pd.DataFrame(grid_rows)
@@ -399,7 +521,7 @@ def main():
                    f"{a2}_bal_acc": perfs[a2]["balanced_accuracy"],
                    "common_genes": ",".join(common) if common else "-"}]).to_csv(
         OUT / "overlap_summary.tsv", sep="\t", index=False)
-    print(f"\n[SAVED] -> {OUT}\n[DONE]  next: 5_enrichment.py")
+    print(f"\n[SAVED] -> {OUT}\n[DONE]")
 
 
 if __name__ == "__main__":

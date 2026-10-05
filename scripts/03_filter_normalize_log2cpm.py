@@ -142,8 +142,7 @@ def main():
     print(f"cross-axis universe (genes measurable in both): {common}")
     print("=" * 70)
     print("\n[DONE] Step 03 completed. Each dataset normalized independently.")
-    print("[NEXT] the gene universe changed — re-run steps 4-7 and compare the")
-    print("       new top-50 lists against the archived run before reporting.")
+  
 
 
 if __name__ == "__main__":

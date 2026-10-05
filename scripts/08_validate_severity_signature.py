@@ -393,10 +393,8 @@ def main():
     print(summ[["contrast", "is_primary", "DHF", "DF", "genes_present",
                 "concordance", "binom_p", "AUC", "permutation_p"]].round(4).to_string(index=False))
     print("\nDirection replication is the primary evidence: it is robust to the")
-    print("RNA-seq -> microarray platform change. Cross-validated RF AUC is secondary.")
     print("The genes were fixed before validation; the RF was fitted only inside")
     print("GSE43777 CV folds. Call this independent-cohort signature validation,")
-    print("not validation of a locked discovery-trained model.")
     print(f"\n[SAVED] -> {OUT}\n[DONE]")
 
 

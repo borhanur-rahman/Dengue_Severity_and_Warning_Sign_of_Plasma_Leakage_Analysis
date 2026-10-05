@@ -320,7 +320,7 @@ def main() -> None:
     )
 
     print(f"\n[SAVED] -> {out_root}")
-    print("[DONE] Interpret hubs as network-central candidates, not proven biomarkers.")
+    print("[DONE]")
 
 
 if __name__ == "__main__":

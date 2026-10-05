@@ -1,2 +1,2 @@
-axis	scheme	balanced_accuracy	auc	mcc
-leakage	nested_5x2	0.5935064935064935	0.5837662337662337	0.2496751135729437
+axis	scheme	ranking	balanced_accuracy	auc	mcc
+leakage	nested_5x2	gini+permutation	0.6162337662337662	0.5850649350649351	0.2975491674432065
